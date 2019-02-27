@@ -5,10 +5,8 @@ const morgan = require('morgan');
 
 const app = express();
 
-// MongoDB configuration
-const db = require('./config/keys').mongodb;
-
 // Connect to database
+const db = require('./config/keys').mongodb;
 mongoose
   .connect(db)
   .then(() => console.log('MongoDB Connected'))

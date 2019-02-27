@@ -13,8 +13,12 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.0",
+    "lodash.isempty": "^4.4.0",
     "mongoose": "^5.4.15",
-    "passport": "^0.4.0"
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.11.0"
   },
   "devDependencies": {
     "morgan": "^1.9.1",
