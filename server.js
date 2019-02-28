@@ -9,7 +9,7 @@ const app = express();
 // Connect to database
 const db = require('./config/keys').mongodb;
 mongoose
-  .connect(db)
+  .connect(db, { useNewUrlParser: true })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
