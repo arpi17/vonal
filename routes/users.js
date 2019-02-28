@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
+const passport = require('passport');
 
 // User Model
 const User = require('../models/User');
@@ -45,11 +46,13 @@ router.post('/register', validateRegistration, (req, res) => {
 // @access  Public
 router.post('/login', validateLogin, (req, res) => {
   const { email, password } = req.body;
+
   User.findOne({ email }).then(user => {
     if (!user) {
-      return res.status(400).json({ error: 'Email not found' });
+      req.errors.email = 'Email not found';
+      return res.status(400).json(req.errors);
     }
-    // Checkhing password
+    // Checking password
     bcrypt.compare(password, user.password).then(isCorrect => {
       if (isCorrect) {
         payload = {
@@ -68,10 +71,23 @@ router.post('/login', validateLogin, (req, res) => {
           }
         );
       } else {
-        return res.status(400).json({ error: 'Invalid password' });
+        req.errors.password = 'Invalid password';
+        return res.status(400).json(req.errors);
       }
     });
   });
 });
+
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email
+    });
+  }
+);
 
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const passport = require('passport');
 
 const app = express();
 
@@ -16,6 +17,10 @@ mongoose
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('tiny'));
+app.use(passport.initialize());
+
+// // Passport config
+require('./config/passport')(passport);
 
 // Router-level middelware
 app.use('/users', require('./routes/users'));
