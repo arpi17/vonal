@@ -3,8 +3,13 @@ const validator = require('validator');
 
 module.exports = function(req, res, next) {
   req.errors = {};
-  const { name, email, password, password2 } = req.body;
+  let { name, email, password, password2 } = req.body;
   const ignoreWhitespace = { ignore_whitespace: true };
+
+  name = !isEmpty(name) ? name : '';
+  email = !isEmpty(email) ? email : '';
+  password = !isEmpty(password) ? password : '';
+  password2 = !isEmpty(password2) ? password2 : '';
 
   // Name
   if (!validator.isLength(name, { min: 4, max: 30 })) {

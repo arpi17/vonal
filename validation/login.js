@@ -3,8 +3,11 @@ const validator = require('validator');
 
 module.exports = function(req, res, next) {
   req.errors = {};
-  const { email, password } = req.body;
+  let { email, password } = req.body;
   const ignoreWhitespace = { ignore_whitespace: true };
+
+  email = !isEmpty(email) ? email : '';
+  password = !isEmpty(password) ? password : '';
 
   // Email
   if (!validator.isEmail(email)) {
