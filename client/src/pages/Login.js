@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import InputField from '../components/InputField';
+import { loginUser } from '../actions/authActions';
 
 class Login extends Component {
   constructor(props) {
@@ -11,6 +14,25 @@ class Login extends Component {
       password: ''
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.errors !== this.props.errors) {
+      this.setState({
+        errors: this.props.errors
+      });
+    }
+
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
   }
 
   handleChange(e) {
@@ -19,13 +41,22 @@ class Login extends Component {
     });
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    const loginData = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    this.props.loginUser(loginData);
+  }
+
   render() {
     return (
       <div className="container">
         <h1>Login</h1>
         <Link to="/">Home</Link>
         <div className="from-group">
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <InputField
               placeholder="Email"
               type="email"
@@ -40,6 +71,7 @@ class Login extends Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
+            <input type="submit" />
           </form>
         </div>
       </div>
@@ -47,4 +79,22 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+const mapDispatchToProps = {
+  loginUser
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);
