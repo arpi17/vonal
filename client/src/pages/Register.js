@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import InputField from '../components/InputField';
+import InputField from '../components/user-input/InputField';
 import { registerUser } from '../actions/authActions';
 
 class Register extends Component {

@@ -10,7 +10,7 @@ import Dashboard from './pages/Dashboard';
 import CreateRoute from './pages/CreateRoute';
 
 // Components
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/common/PrivateRoute';
 
 // Redux
 import store from './store';
