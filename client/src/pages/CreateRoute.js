@@ -14,7 +14,8 @@ class CreateRoute extends Component {
     this.state = {
       lng: 5,
       lat: 34,
-      zoom: 1.5
+      zoom: 1.5,
+      map: {}
     };
     this.handleCoordChange = this.handleCoordChange.bind(this);
   }
@@ -29,6 +30,7 @@ class CreateRoute extends Component {
       zoom
     });
 
+    // Register move event handler
     map.on('move', () => {
       const { lng, lat } = map.getCenter();
 
@@ -39,6 +41,8 @@ class CreateRoute extends Component {
       });
     });
 
+    this.setState({ map });
+
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxToken
     });
@@ -46,14 +50,14 @@ class CreateRoute extends Component {
     this.geocoderRef.current.appendChild(geocoder.onAdd(map));
   }
 
-  componentWillUnmount() {
-    this.map.remove();
-  }
-
   handleCoordChange() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         const { longitude, latitude } = pos.coords;
+        this.state.map.flyTo({
+          center: [longitude, latitude],
+          zoom: 15
+        });
         this.setState({
           lng: longitude.toFixed(4),
           lat: latitude.toFixed(4),
