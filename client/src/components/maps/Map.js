@@ -1,7 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class Map extends Component {
-  render() {
-    return <div>Hello</div>;
-  }
+function Map({ mapContainerRef }) {
+  return (
+    <div
+      className="map"
+      ref={mapContainerRef}
+      style={{ width: '500px', height: '500px' }}
+    />
+  );
 }
+
+export default Map;
