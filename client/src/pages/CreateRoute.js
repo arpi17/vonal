@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { mapboxToken } from '../accessToken';
 
-import Geolocator from '../components/common/Geolocator';
+import Geolocator from '../components/buttons/Geolocator';
 import Map from '../components/maps/Map';
 import SearchBar from '../components/user-input/SearchBar';
+import RouteInitButton from '../components/buttons/RouteInitButton';
 
 mapboxgl.accessToken = mapboxToken;
 
@@ -12,9 +13,13 @@ class CreateRoute extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      map: {}
+      map: {},
+      isLoading: true,
+      route: {},
+      isRouteInitialised: false
     };
     this.handleGeolocatorClick = this.handleGeolocatorClick.bind(this);
+    this.handleRouteInitClick = this.handleRouteInitClick.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +34,7 @@ class CreateRoute extends Component {
       zoom
     });
 
-    this.setState({ map });
+    this.setState({ map, isLoading: false });
   }
 
   handleGeolocatorClick() {
@@ -44,13 +49,38 @@ class CreateRoute extends Component {
     }
   }
 
+  handleRouteInitClick() {
+    const { map } = this.state;
+    if (map.getZoom() < 11) {
+      alert('Please zoom in more to be able to create a local route');
+      return;
+    }
+    if (!this.state.route.isRouteInitialised) {
+      this.setState({
+        map: map.setMinZoom(11),
+        isRouteInitialised: true
+      });
+    }
+  }
+
   render() {
     return (
       <div>
         <h1>Create Your Own Route</h1>
-        <SearchBar map={this.state.map} accessToken={mapboxToken} />
+        <SearchBar
+          map={this.state.map}
+          isLoading={this.state.isLoading}
+          accessToken={mapboxToken}
+        />
         <Geolocator onClick={this.handleGeolocatorClick} />
-        <Map mapContainerRef={el => (this.mapContainer = el)} />
+        <Map
+          mapRef={el => (this.mapContainer = el)}
+          // map={this.state.map}
+          isRouteInitialised={this.state.isRouteInitialised}
+        />
+        {!this.state.isRouteInitialised && (
+          <RouteInitButton onClick={this.handleRouteInitClick} />
+        )}
       </div>
     );
   }
