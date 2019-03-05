@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { mapboxToken } from '../accessToken';
 
 import Geolocator from '../components/buttons/Geolocator';
 import Map from '../components/maps/Map';
 import SearchBar from '../components/user-input/SearchBar';
 import RouteInitButton from '../components/buttons/RouteInitButton';
 
+import { setDraw, updateRoute, removeRoute } from '../utils/setRoute';
+
+import { mapboxToken } from '../accessToken';
 mapboxgl.accessToken = mapboxToken;
 
 class CreateRoute extends Component {
@@ -50,14 +52,20 @@ class CreateRoute extends Component {
   }
 
   handleRouteInitClick() {
-    const { map } = this.state;
+    const { map, isRouteInitialised } = this.state;
     if (map.getZoom() < 11) {
       alert('Please zoom in more to be able to create a local route');
       return;
     }
-    if (!this.state.route.isRouteInitialised) {
+    if (!isRouteInitialised) {
+      // Add draw event handlers
+      const draw = setDraw();
+      map.on('draw.create', () => updateRoute(draw, map, mapboxToken));
+      map.on('draw.update', () => updateRoute(draw, map, mapboxToken));
+      map.on('draw.delete', () => removeRoute(map));
+
       this.setState({
-        map: map.setMinZoom(11),
+        map: map.setMinZoom(11).addControl(draw),
         isRouteInitialised: true
       });
     }
@@ -73,17 +81,35 @@ class CreateRoute extends Component {
           accessToken={mapboxToken}
         />
         <Geolocator onClick={this.handleGeolocatorClick} />
-        <Map
-          mapRef={el => (this.mapContainer = el)}
-          // map={this.state.map}
-          isRouteInitialised={this.state.isRouteInitialised}
-        />
-        {!this.state.isRouteInitialised && (
-          <RouteInitButton onClick={this.handleRouteInitClick} />
-        )}
+        <div style={mapAndDescStyle}>
+          <Map
+            mapRef={el => (this.mapContainer = el)}
+            // map={this.state.map}
+            isRouteInitialised={this.state.isRouteInitialised}
+          />
+          {!this.state.isRouteInitialised && (
+            <RouteInitButton
+              onClick={this.handleRouteInitClick}
+              style={buttonStyle}
+            />
+          )}
+        </div>
       </div>
     );
   }
 }
+
+// FOR DEVELOPEMENT ONLY
+const mapAndDescStyle = {
+  width: '80%',
+  marginTop: '20px',
+  display: 'flex',
+  justifyContent: 'space-around'
+};
+
+const buttonStyle = {
+  width: '100px',
+  height: '30px'
+};
 
 export default CreateRoute;

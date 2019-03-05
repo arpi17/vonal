@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function RouteInitButton(props) {
-  return <button onClick={props.onClick}>Start Drawing</button>;
+  return (
+    <button onClick={props.onClick} style={props.style}>
+      Start Drawing
+    </button>
+  );
 }
 
 RouteInitButton.propTypes = {
