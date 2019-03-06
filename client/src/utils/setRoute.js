@@ -72,7 +72,7 @@ export const updateRoute = (draw, map, accessToken) => {
   const data = draw.getAll();
   const lastFeature = data.features.length - 1;
   const coords = data.features[lastFeature].geometry.coordinates.join(';');
-  console.log(coords);
+  console.log(data.features);
 
   // Set profile
   const profile = 'walking';

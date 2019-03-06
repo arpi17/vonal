@@ -9,6 +9,7 @@ import RouteInitButton from '../components/buttons/RouteInitButton';
 import { setDraw, updateRoute, removeRoute } from '../utils/setRoute';
 
 import { mapboxToken } from '../accessToken';
+import MapData from '../components/user-input/MapData';
 mapboxgl.accessToken = mapboxToken;
 
 class CreateRoute extends Component {
@@ -18,10 +19,14 @@ class CreateRoute extends Component {
       map: {},
       isLoading: true,
       route: {},
-      isRouteInitialised: false
+      isRouteInitialised: false,
+      title: '',
+      description: '',
+      tags: []
     };
     this.handleGeolocatorClick = this.handleGeolocatorClick.bind(this);
     this.handleRouteInitClick = this.handleRouteInitClick.bind(this);
+    this.handleDataChange = this.handleDataChange.bind(this)
   }
 
   componentDidMount() {
@@ -71,6 +76,12 @@ class CreateRoute extends Component {
     }
   }
 
+  handleDataChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   render() {
     return (
       <div>
@@ -87,12 +98,19 @@ class CreateRoute extends Component {
             // map={this.state.map}
             isRouteInitialised={this.state.isRouteInitialised}
           />
-          {!this.state.isRouteInitialised && (
+          {!this.state.isRouteInitialised ? (
             <RouteInitButton
               onClick={this.handleRouteInitClick}
               style={buttonStyle}
             />
-          )}
+          ) : (
+            < MapData 
+              title={this.state.title}
+              description={this.state.description}
+              onChange={this.handleDataChange}
+            />
+          )
+          }
         </div>
       </div>
     );
