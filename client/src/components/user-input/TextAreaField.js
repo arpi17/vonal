@@ -1,38 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function InputField({
-  placeholder,
-  label,
-  name,
-  type,
-  checked,
-  value,
-  onChange
-}) {
+function TextAreaField({ placeholder, name, label, value, onChange }) {
   return (
     <label>
       <div>{label}</div>
-      <input
+      <textarea
         placeholder={placeholder}
         name={name}
-        type={type}
         value={value}
-        checked={checked}
         onChange={onChange}
+        cols="30"
+        rows="10"
       />
     </label>
   );
 }
 
-InputField.propTypes = {
-  placeholder: PropTypes.string,
-  label: PropTypes.string,
+TextAreaField.propTypes = {
+  placeholder: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  checked: PropTypes.bool,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 };
 
-export default InputField;
+export default TextAreaField;

@@ -6,7 +6,7 @@ import Map from '../components/maps/Map';
 import SearchBar from '../components/user-input/SearchBar';
 import RouteInitButton from '../components/buttons/RouteInitButton';
 
-import { setDraw, updateRoute, removeRoute } from '../utils/setRoute';
+import { setDraw, setRouteLayer } from '../utils/setRoute';
 
 import { mapboxToken } from '../accessToken';
 import MapData from '../components/user-input/MapData';
@@ -18,15 +18,24 @@ class CreateRoute extends Component {
     this.state = {
       map: {},
       isLoading: true,
-      route: {},
       isRouteInitialised: false,
-      title: '',
-      description: '',
-      tags: []
+      route: {
+        city: '', // TODO: Set it on submit
+        coutry: '', // TODO: Set it on submit
+        title: '',
+        description: '',
+        tags: [],
+        coords: [],
+        type: 'walking'
+      },
+      currentTag: ''
     };
     this.handleGeolocatorClick = this.handleGeolocatorClick.bind(this);
     this.handleRouteInitClick = this.handleRouteInitClick.bind(this);
-    this.handleDataChange = this.handleDataChange.bind(this)
+    this.handleDataChange = this.handleDataChange.bind(this);
+    this.handleAddTagClick = this.handleAddTagClick.bind(this);
+    this.handleDeleteTagClick = this.handleDeleteTagClick.bind(this);
+    this.handleDrawRouteClick = this.handleDrawRouteClick.bind(this);
   }
 
   componentDidMount() {
@@ -63,11 +72,10 @@ class CreateRoute extends Component {
       return;
     }
     if (!isRouteInitialised) {
-      // Add draw event handlers
       const draw = setDraw();
-      map.on('draw.create', () => updateRoute(draw, map, mapboxToken));
-      map.on('draw.update', () => updateRoute(draw, map, mapboxToken));
-      map.on('draw.delete', () => removeRoute(map));
+      map.on('draw.create', e => this.setCoords(e));
+      map.on('draw.update', e => this.setCoords(e));
+      map.on('draw.delete', () => this.removeRoute(map));
 
       this.setState({
         map: map.setMinZoom(11).addControl(draw),
@@ -77,40 +85,132 @@ class CreateRoute extends Component {
   }
 
   handleDataChange(e) {
+    if (e.target.name !== 'currentTag') {
+      this.setState({
+        route: {
+          ...this.state.route,
+          [e.target.name]: e.target.value
+        }
+      });
+    } else {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    }
+  }
+
+  handleAddTagClick() {
+    const name = this.state.currentTag.trim().toLowerCase();
+    if (this.state.route.tags.every(tag => tag.name !== name) && name !== '') {
+      this.setState(state => ({
+        route: {
+          ...state.route,
+          tags: [
+            ...state.route.tags,
+            {
+              id: name,
+              name
+            }
+          ]
+        },
+        currentTag: ''
+      }));
+    }
+  }
+
+  handleDeleteTagClick(id) {
     this.setState({
-      [e.target.name]: e.target.value
-    })
+      route: {
+        ...this.state.route,
+        tags: this.state.route.tags.filter(tag => tag.id !== id)
+      }
+    });
+  }
+
+  handleDrawRouteClick() {
+    const {
+      map,
+      route: { type }
+    } = this.state;
+    const coords = this.state.route.coords.join(';');
+
+    const url = `
+      https://api.mapbox.com/directions/v5/mapbox/${type}/${coords}?geometries=geojson&access_token=${mapboxToken}
+    `;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const coords = data.routes[0].geometry;
+
+        if (map.getSource('route')) {
+          map.removeLayer('route');
+          map.removeSource('route');
+        } else {
+          map.addLayer(setRouteLayer(coords));
+        }
+      });
+  }
+
+  setCoords(e) {
+    // Which features to add???
+    this.removeRoute();
+    const coords = e.features[0].geometry.coordinates;
+    this.setState({
+      route: {
+        ...this.state.route,
+        coords
+      }
+    });
+  }
+
+  removeRoute() {
+    const { map } = this.state;
+    if (map.getSource('route')) {
+      map.removeLayer('route');
+      map.removeSource('route');
+    } else {
+      return;
+    }
   }
 
   render() {
+    const {
+      map,
+      isLoading,
+      isRouteInitialised,
+      route: { title, description, tags, type },
+      currentTag
+    } = this.state;
+
     return (
       <div>
         <h1>Create Your Own Route</h1>
-        <SearchBar
-          map={this.state.map}
-          isLoading={this.state.isLoading}
-          accessToken={mapboxToken}
-        />
+        <SearchBar map={map} isLoading={isLoading} accessToken={mapboxToken} />
         <Geolocator onClick={this.handleGeolocatorClick} />
         <div style={mapAndDescStyle}>
           <Map
             mapRef={el => (this.mapContainer = el)}
-            // map={this.state.map}
-            isRouteInitialised={this.state.isRouteInitialised}
+            isRouteInitialised={isRouteInitialised}
           />
-          {!this.state.isRouteInitialised ? (
+          {!isRouteInitialised ? (
             <RouteInitButton
               onClick={this.handleRouteInitClick}
               style={buttonStyle}
             />
           ) : (
-            < MapData 
-              title={this.state.title}
-              description={this.state.description}
+            <MapData
+              title={title}
+              description={description}
+              currentTag={currentTag}
+              tags={tags}
+              type={type}
               onChange={this.handleDataChange}
+              addTagClick={this.handleAddTagClick}
+              deleteTagClick={this.handleDeleteTagClick}
+              drawRouteClick={this.handleDrawRouteClick}
             />
-          )
-          }
+          )}
         </div>
       </div>
     );

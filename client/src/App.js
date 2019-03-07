@@ -39,12 +39,14 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/create" component={CreateRoute} />
+            {/* TODO: fix routing */}
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
-            <Switch>
+            {/* <Switch>
               <PrivateRoute exact path="/create" component={CreateRoute} />
-            </Switch>
+            </Switch> */}
           </React.Fragment>
         </Router>
       </Provider>

@@ -67,64 +67,26 @@ export const setDraw = () => {
   return draw;
 };
 
-export const updateRoute = (draw, map, accessToken) => {
-  // removeRoute(); // overwrite any existing layers
-  const data = draw.getAll();
-  const lastFeature = data.features.length - 1;
-  const coords = data.features[lastFeature].geometry.coordinates.join(';');
-  console.log(data.features);
-
-  // Set profile
-  const profile = 'walking';
-
-  // Make request
-  // const url = `
-  //   https://api.mapbox.com/directions/v5/mapbox/
-  //   ${profile}/
-  //   ${coords}?geometries=geojson&steps=true&&access_token=${accessToken}
-  //   `;
-
-  const url = `https://api.mapbox.com/directions/v5/mapbox/${profile}/${coords}?geometries=geojson&access_token=${accessToken}`;
-
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      const coords = data.routes[0].geometry;
-
-      if (map.getSource('route')) {
-        map.removeLayer('route');
-        map.removeSource('route');
-      } else {
-        map.addLayer({
-          id: 'route',
-          type: 'line',
-          source: {
-            type: 'geojson',
-            data: {
-              type: 'Feature',
-              properties: {},
-              geometry: coords
-            }
-          },
-          layout: {
-            'line-join': 'round',
-            'line-cap': 'round'
-          },
-          paint: {
-            'line-color': '#3b9ddd',
-            'line-width': 8,
-            'line-opacity': 0.8
-          }
-        });
-      }
-    });
-};
-
-export const removeRoute = map => {
-  if (map.getSource('route')) {
-    map.removeLayer('route');
-    map.removeSource('route');
-  } else {
-    return;
+// @desc:   Create a new route layer
+// @return: route layer object
+export const setRouteLayer = coords => ({
+  id: 'route',
+  type: 'line',
+  source: {
+    type: 'geojson',
+    data: {
+      type: 'Feature',
+      properties: {},
+      geometry: coords
+    }
+  },
+  layout: {
+    'line-join': 'round',
+    'line-cap': 'round'
+  },
+  paint: {
+    'line-color': '#3b9ddd',
+    'line-width': 8,
+    'line-opacity': 0.8
   }
-};
+});
