@@ -13,17 +13,18 @@ mongoose
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
+// // Passport config
+require('./config/passport')(passport);
+
 // Application-level middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('tiny'));
 app.use(passport.initialize());
 
-// // Passport config
-require('./config/passport')(passport);
-
 // Router-level middelware
 app.use('/users', require('./routes/users'));
+app.use('/routes', require('./routes/routes'));
 
 PORT = process.env.PORT || 5000;
 
