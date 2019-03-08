@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import mapboxgl from 'mapbox-gl';
 
 import Geolocator from '../components/buttons/Geolocator';
@@ -185,6 +186,7 @@ class CreateRoute extends Component {
 
     return (
       <div>
+        <Link to="/dashboard">&larr; Dashboard</Link>
         <h1>Create Your Own Route</h1>
         <SearchBar map={map} isLoading={isLoading} accessToken={mapboxToken} />
         <Geolocator onClick={this.handleGeolocatorClick} />

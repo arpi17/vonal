@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import jwt_decode from 'jwt-decode';
 
 // Pages
 import Landing from './pages/Landing';
@@ -14,7 +15,7 @@ import PrivateRoute from './components/common/PrivateRoute';
 
 // Redux
 import store from './store';
-import { setCurrentUser } from './actions/authActions';
+import { setCurrentUser, logoutUser } from './actions/authActions';
 
 // Utils
 import setAuthToken from './utils/setAuthToken';
@@ -22,15 +23,21 @@ import setAuthToken from './utils/setAuthToken';
 // Styles
 import './App.css';
 
-class App extends Component {
-  componentDidMount() {
-    const token = localStorage['authToken'];
-    if (token) {
-      setAuthToken(token);
-      store.dispatch(setCurrentUser(token));
-    }
-  }
+const token = localStorage['authToken'];
+if (token) {
+  setAuthToken(token);
+  const decoded = jwt_decode(token);
+  console.log(decoded);
+  store.dispatch(setCurrentUser(decoded));
 
+  // Check for expiration
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    store.dispatch(logoutUser());
+  }
+}
+
+class App extends Component {
   render() {
     return (
       <Provider store={store}>
@@ -39,14 +46,12 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/create" component={CreateRoute} />
-            {/* TODO: fix routing */}
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
-            {/* <Switch>
+            <Switch>
               <PrivateRoute exact path="/create" component={CreateRoute} />
-            </Switch> */}
+            </Switch>
           </React.Fragment>
         </Router>
       </Provider>
