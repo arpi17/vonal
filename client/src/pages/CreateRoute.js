@@ -8,6 +8,7 @@ import SearchBar from '../components/user-input/SearchBar';
 import RouteInitButton from '../components/buttons/RouteInitButton';
 
 import { setDraw, setRouteLayer } from '../utils/setRoute';
+import parseLocation from '../utils/parseLocation';
 
 import { mapboxToken } from '../accessToken';
 import MapData from '../components/user-input/MapData';
@@ -21,8 +22,8 @@ class CreateRoute extends Component {
       isLoading: true,
       isRouteInitialised: false,
       route: {
-        city: '', // TODO: Set it on submit
-        coutry: '', // TODO: Set it on submit
+        coutry: '', 
+        city: '',
         title: '',
         description: '',
         tags: [],
@@ -37,6 +38,7 @@ class CreateRoute extends Component {
     this.handleAddTagClick = this.handleAddTagClick.bind(this);
     this.handleDeleteTagClick = this.handleDeleteTagClick.bind(this);
     this.handleDrawRouteClick = this.handleDrawRouteClick.bind(this);
+    this.getLocationName = this.getLocationName.bind(this);
   }
 
   componentDidMount() {
@@ -172,6 +174,27 @@ class CreateRoute extends Component {
       map.removeSource('route');
     } else {
       return;
+    }
+  }
+
+  getLocationName() {
+    const { coords } = this.state.route;
+    if (coords.length > 0) {
+      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${
+        coords[0]
+      }.json?access_token=${mapboxToken}`;
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          const [country, city] = parseLocation(data.features);
+          this.setState({
+            route: {
+              ...this.state.route,
+              country,
+              city
+            }
+          })
+        });
     }
   }
 

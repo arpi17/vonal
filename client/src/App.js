@@ -27,7 +27,6 @@ const token = localStorage['authToken'];
 if (token) {
   setAuthToken(token);
   const decoded = jwt_decode(token);
-  console.log(decoded);
   store.dispatch(setCurrentUser(decoded));
 
   // Check for expiration
