@@ -1,7 +1,10 @@
 const colors = {
-  bgColor: '#F4FFF6',
+  bgColor: '#FBFBFB',
   bgColorDark: '#C4C4C4',
-  primary: '#'
+  overlay: 'rgba(40,32,13,0.4)',
+  primary: '#91ED8F',
+  secondary: '#79A5CE',
+  link: '#2D9BD9'
 };
 
 export default colors;

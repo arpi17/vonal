@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Input } from '../../styles/FormFields';
+
 function InputField({
   placeholder,
   label,
@@ -13,7 +15,7 @@ function InputField({
   return (
     <label>
       <div>{label}</div>
-      <input
+      <Input
         placeholder={placeholder}
         name={name}
         type={type}

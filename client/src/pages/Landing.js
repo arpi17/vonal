@@ -3,16 +3,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  LandingPage,
-  LandingLinks,
-  Image,
-  NavCard,
-  NavList,
-  MainTagline,
-  SubTagline,
-  NavItem
-} from '../styles/styles';
+// Styled-components
+import { MainTagline, SubTagline } from '../styles/styles';
+import { Grid, GridContent, GridImage } from '../styles/Grid';
+import { Card } from '../styles/Card';
+import { NavList, NavItem } from '../styles/Nav';
 
 class Landing extends Component {
   componentDidUpdate({ history }) {
@@ -23,13 +18,13 @@ class Landing extends Component {
 
   render() {
     return (
-      <LandingPage>
-        <Image img={process.env.PUBLIC_URL + '/landing.jpg'}>
+      <Grid areas={'"image image content"'}>
+        <GridImage img={process.env.PUBLIC_URL + '/landing.jpg'}>
           <MainTagline>Vonal</MainTagline>
           <SubTagline>Create and discover your own routes</SubTagline>
-        </Image>
-        <LandingLinks>
-          <NavCard>
+        </GridImage>
+        <GridContent>
+          <Card width="240px">
             <NavList>
               <NavItem as={Link} to="/register">
                 Sign Up
@@ -47,9 +42,9 @@ class Landing extends Component {
                 Contact
               </NavItem>
             </NavList>
-          </NavCard>
-        </LandingLinks>
-      </LandingPage>
+          </Card>
+        </GridContent>
+      </Grid>
     );
   }
 }

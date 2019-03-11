@@ -6,6 +6,12 @@ import PropTypes from 'prop-types';
 import InputField from '../components/user-input/InputField';
 import { registerUser } from '../actions/authActions';
 
+// Styled-components
+import { Grid, GridContent, GridImage } from '../styles/Grid';
+import { Card, CardContent } from '../styles/Card';
+import { SubmitButton } from '../styles/Button';
+import { Para, LinkText } from '../styles/Text';
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -48,46 +54,55 @@ class Register extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1>Sign Up</h1>
-        <Link to="/">Home</Link>
-        <p>
-          Already have an account? Log in <Link to="/login">here</Link>
-        </p>
-        <div className="form-group">
-          <form onSubmit={this.handleSubmit}>
-            <InputField
-              placeholder="Name"
-              type="text"
-              name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-            <InputField
-              placeholder="Email"
-              type="email"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-            <InputField
-              placeholder="Password"
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-            <InputField
-              placeholder="Confirm Password"
-              type="password"
-              name="password2"
-              value={this.state.password2}
-              onChange={this.handleChange}
-            />
-            <input type="submit" />
-          </form>
-        </div>
-      </div>
+      <Grid areas={'"image content content"'}>
+        <GridImage img={process.env.PUBLIC_URL + '/roadsign.jpg'}>
+          <Link to="/">Home</Link>
+        </GridImage>
+        <GridContent>
+          <Card>
+            <CardContent>
+              <h1>Sign Up</h1>
+              <form onSubmit={this.handleSubmit}>
+                <InputField
+                  placeholder="Name"
+                  type="text"
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                />
+                <InputField
+                  placeholder="Email"
+                  type="email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+                <InputField
+                  placeholder="Password"
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                />
+                <InputField
+                  placeholder="Confirm Password"
+                  type="password"
+                  name="password2"
+                  value={this.state.password2}
+                  onChange={this.handleChange}
+                />
+                <SubmitButton primary>Register</SubmitButton>
+                <Para>
+                  Already have an account? Log in{' '}
+                  <LinkText as={Link} to="/login">
+                    here
+                  </LinkText>
+                </Para>
+              </form>
+            </CardContent>
+          </Card>
+        </GridContent>
+      </Grid>
     );
   }
 }

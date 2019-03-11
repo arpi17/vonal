@@ -1,4 +1,4 @@
-const typography = {
+const fonts = {
   fsH1: '60px',
   fsH2: '42px',
   fsH3: '28px',
@@ -6,4 +6,4 @@ const typography = {
   fsBody: '20px'
 };
 
-export default typography;
+export default fonts;
