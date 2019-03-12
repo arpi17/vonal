@@ -8,16 +8,17 @@ import { loginUser } from '../actions/authActions';
 
 // Styled-components
 import { Grid, GridImage } from '../styles/Grid';
-import { Card, CardContent } from '../styles/Card';
+import { Card, CardContent, CardTitle, CardText } from '../styles/Card';
 import { SubmitButton } from '../styles/Button';
-import { Para, LinkText } from '../styles/Text';
+import { LinkText } from '../styles/Text';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      errors: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -57,37 +58,40 @@ class Login extends Component {
   }
 
   render() {
+    const { email, password, errors } = this.state;
     return (
       <Grid areas={'"image image image"'}>
         <GridImage img={process.env.PUBLIC_URL + '/login.jpg'}>
           <Link to="/">Home</Link>
-          <Card transparent>
+          <Card top="200px" transparent>
             <CardContent>
-              <h1>Login</h1>
+              <CardTitle>Login</CardTitle>
 
               <form onSubmit={this.handleSubmit}>
                 <InputField
                   placeholder="Email"
                   type="email"
                   name="email"
-                  value={this.state.email}
+                  value={email}
                   onChange={this.handleChange}
+                  error={errors.email}
                 />
                 <InputField
                   placeholder="Password"
                   type="password"
                   name="password"
-                  value={this.state.password}
+                  value={password}
                   onChange={this.handleChange}
+                  error={errors.password}
                 />
                 <SubmitButton>Enter</SubmitButton>
               </form>
-              <Para>
+              <CardText>
                 Don't have an account yet? Sign up{' '}
                 <LinkText as={Link} to="/register">
                   here
                 </LinkText>
-              </Para>
+              </CardText>
             </CardContent>
           </Card>
         </GridImage>

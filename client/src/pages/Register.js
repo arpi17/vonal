@@ -8,9 +8,9 @@ import { registerUser } from '../actions/authActions';
 
 // Styled-components
 import { Grid, GridContent, GridImage } from '../styles/Grid';
-import { Card, CardContent } from '../styles/Card';
+import { Card, CardContent, CardTitle, CardText } from '../styles/Card';
 import { SubmitButton } from '../styles/Button';
-import { Para, LinkText } from '../styles/Text';
+import { LinkText } from '../styles/Text';
 
 class Register extends Component {
   constructor(props) {
@@ -53,6 +53,7 @@ class Register extends Component {
   }
 
   render() {
+    const { name, email, password, password2, errors } = this.state;
     return (
       <Grid areas={'"image content content"'}>
         <GridImage img={process.env.PUBLIC_URL + '/roadsign.jpg'}>
@@ -61,43 +62,47 @@ class Register extends Component {
         <GridContent>
           <Card>
             <CardContent>
-              <h1>Sign Up</h1>
+              <CardTitle>Sign Up</CardTitle>
               <form onSubmit={this.handleSubmit}>
                 <InputField
                   placeholder="Name"
                   type="text"
                   name="name"
-                  value={this.state.name}
+                  value={name}
                   onChange={this.handleChange}
+                  error={errors.name}
                 />
                 <InputField
                   placeholder="Email"
                   type="email"
                   name="email"
-                  value={this.state.email}
+                  value={email}
                   onChange={this.handleChange}
+                  error={errors.email}
                 />
                 <InputField
                   placeholder="Password"
                   type="password"
                   name="password"
-                  value={this.state.password}
+                  value={password}
                   onChange={this.handleChange}
+                  error={errors.password}
                 />
                 <InputField
                   placeholder="Confirm Password"
                   type="password"
                   name="password2"
-                  value={this.state.password2}
+                  value={password2}
                   onChange={this.handleChange}
+                  error={errors.password2}
                 />
                 <SubmitButton primary>Register</SubmitButton>
-                <Para>
+                <CardText>
                   Already have an account? Log in{' '}
                   <LinkText as={Link} to="/login">
                     here
                   </LinkText>
-                </Para>
+                </CardText>
               </form>
             </CardContent>
           </Card>

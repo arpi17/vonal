@@ -1,29 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Input } from '../../styles/FormFields';
+import { Input, InputFieldGroup, ErrorMsg } from '../../styles/FormFields';
 
-function InputField({
-  placeholder,
-  label,
-  name,
-  type,
-  checked,
-  value,
-  onChange
-}) {
+function InputField(props) {
+  const {
+    placeholder,
+    label,
+    name,
+    type,
+    checked,
+    value,
+    onChange,
+    error
+  } = props;
+
+  const errorMessage = <ErrorMsg>{error}</ErrorMsg>;
+
   return (
-    <label>
-      <div>{label}</div>
-      <Input
-        placeholder={placeholder}
-        name={name}
-        type={type}
-        value={value}
-        checked={checked}
-        onChange={onChange}
-      />
-    </label>
+    <InputFieldGroup>
+      <label>
+        <div>{label}</div>
+        <Input
+          placeholder={placeholder}
+          name={name}
+          type={type}
+          value={value}
+          checked={checked}
+          onChange={onChange}
+          error={error}
+        />
+      </label>
+      {error && errorMessage}
+    </InputFieldGroup>
   );
 }
 
@@ -34,7 +43,8 @@ InputField.propTypes = {
   type: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.string
 };
 
 export default InputField;

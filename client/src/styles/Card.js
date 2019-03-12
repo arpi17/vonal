@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import colors from './colors';
+import fonts from './fonts';
 
 export const Card = styled.div`
   width: ${props => (props.width ? props.width : '300px')};
@@ -8,7 +9,7 @@ export const Card = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 70px;
+  top: ${props => (props.top ? props.top : '70px')};
 
   display: flex;
   justify-content: center;
@@ -27,4 +28,13 @@ export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+export const CardTitle = styled.h3`
+  margin-bottom: 20px;
+  font-size: ${fonts.fsH3};
+`;
+
+export const CardText = styled.p`
+  margin: 25px auto 15px auto;
 `;

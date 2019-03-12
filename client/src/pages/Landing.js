@@ -24,7 +24,7 @@ class Landing extends Component {
           <SubTagline>Create and discover your own routes</SubTagline>
         </GridImage>
         <GridContent>
-          <Card width="240px">
+          <Card width="240px" top="150px">
             <NavList>
               <NavItem as={Link} to="/register">
                 Sign Up

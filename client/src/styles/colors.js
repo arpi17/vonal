@@ -4,7 +4,8 @@ const colors = {
   overlay: 'rgba(40,32,13,0.4)',
   primary: '#91ED8F',
   secondary: '#79A5CE',
-  link: '#2D9BD9'
+  link: '#2D9BD9',
+  error: '#EB5D5D'
 };
 
 export default colors;
