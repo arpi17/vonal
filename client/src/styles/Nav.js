@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import colors from './colors';
 import fonts from './fonts';
 
 export const NavList = styled.ul`
@@ -19,6 +20,6 @@ export const NavItem = styled.li`
   color: inherit;
 
   &:hover {
-    color: red;
+    color: ${colors.primary};
   }
 `;

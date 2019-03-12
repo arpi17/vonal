@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Styled-components
-import { MainTagline, SubTagline } from '../styles/styles';
+import { MainTagline, SubTagline } from '../styles/Title';
 import { Grid, GridContent, GridImage } from '../styles/Grid';
 import { Card } from '../styles/Card';
 import { NavList, NavItem } from '../styles/Nav';
