@@ -5,6 +5,15 @@ import PropTypes from 'prop-types';
 
 import { logoutUser } from '../actions/authActions';
 
+import Header from '../components/common/Header';
+import Footer from '../components/common/Footer';
+
+import {
+  DashMain,
+  DashCardContainer,
+  DashCard
+} from '../styles/StyledDashboard';
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -17,13 +26,29 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="container">
-        <Link to="/" onClick={this.handleLogoutClick}>
-          Logout
-        </Link>
-        <h1>Dashboard</h1>
-        <Link to="/create">Create a route</Link>
-      </div>
+      <React.Fragment>
+        <Header
+          user={this.props.auth.user.name}
+          onClick={this.handleLogoutClick}
+        />
+        <DashMain>
+          <DashCardContainer>
+            <DashCard as={Link} to="/create">
+              create route
+            </DashCard>
+            <DashCard as={Link} to="/discover">
+              discover
+            </DashCard>
+            <DashCard as={Link} to="/my-routes">
+              my routes
+            </DashCard>
+            <DashCard as={Link} to="/bucketlist">
+              bucketlist
+            </DashCard>
+          </DashCardContainer>
+        </DashMain>
+        <Footer />
+      </React.Fragment>
     );
   }
 }

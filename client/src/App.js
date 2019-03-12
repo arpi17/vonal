@@ -9,6 +9,8 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import CreateRoute from './pages/CreateRoute';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 // Components
 import PrivateRoute from './components/common/PrivateRoute';
@@ -45,6 +47,8 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/contact" component={Contact} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>

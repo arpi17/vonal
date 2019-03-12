@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import colors from './colors';
 
-const { bgColor, overlay } = colors;
-
 // @args: areas: 'image image content'
 export const Grid = styled.div`
   height: 100vh;
@@ -13,7 +11,11 @@ export const Grid = styled.div`
 `;
 export const GridImage = styled.div`
   grid-area: image;
-  background-image: linear-gradient(180deg, ${overlay} 0%, ${overlay} 100%),
+  background-image: linear-gradient(
+      180deg,
+      ${colors.overlay} 0%,
+      ${colors.overlay} 100%
+    ),
     url(${props => props.img});
   background-position: center;
   background-size: cover;
@@ -23,5 +25,5 @@ export const GridImage = styled.div`
 export const GridContent = styled.div`
   grid-area: content;
   position: relative;
-  background-color: ${bgColor};
+  background-color: ${colors.bgColor};
 `;
