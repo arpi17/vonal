@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 
@@ -44,7 +49,17 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <React.Fragment>
-            <Route exact path="/" component={Landing} />
+            <Route
+              exact
+              path="/"
+              render={() =>
+                store.getState().auth.isAuthenticated ? (
+                  <Redirect to="/dashboard" />
+                ) : (
+                  <Landing />
+                )
+              }
+            />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/about" component={About} />

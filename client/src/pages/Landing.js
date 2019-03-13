@@ -10,12 +10,6 @@ import { Card } from '../styles/Card';
 import { NavList, NavItem } from '../styles/Nav';
 
 class Landing extends Component {
-  componentDidUpdate({ history }) {
-    if (this.props.auth.isAuthenticated) {
-      history.push('/dashboard');
-    }
-  }
-
   render() {
     return (
       <Grid areas={'"image image content"'}>

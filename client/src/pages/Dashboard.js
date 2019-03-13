@@ -27,10 +27,7 @@ class Dashboard extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header
-          user={this.props.auth.user.name}
-          onClick={this.handleLogoutClick}
-        />
+        <Header />
         <DashMain>
           <DashCardContainer>
             <DashCard as={Link} to="/create">
