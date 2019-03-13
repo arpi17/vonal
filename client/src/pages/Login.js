@@ -62,7 +62,6 @@ class Login extends Component {
     return (
       <Grid areas={'"image image image"'}>
         <GridImage img={process.env.PUBLIC_URL + '/login.jpg'}>
-          <Link to="/">Home</Link>
           <Card top="200px" transparent>
             <CardContent>
               <CardTitle>Login</CardTitle>

@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import colors from './colors';
 import fonts from './fonts';
+import sizes from './sizes';
 
 const side = '200px';
 
 export const DashMain = styled.main`
-  height: calc(100vh - 100px);
+  height: calc(100vh - ${sizes.headerHeight} - ${sizes.footerHeight});
   background-image: linear-gradient(
       180deg,
       ${colors.overlay} 0%,

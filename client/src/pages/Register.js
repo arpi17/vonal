@@ -56,9 +56,7 @@ class Register extends Component {
     const { name, email, password, password2, errors } = this.state;
     return (
       <Grid areas={'"image content content"'}>
-        <GridImage img={process.env.PUBLIC_URL + '/roadsign.jpg'}>
-          <Link to="/">Home</Link>
-        </GridImage>
+        <GridImage img={process.env.PUBLIC_URL + '/roadsign.jpg'} />
         <GridContent>
           <Card>
             <CardContent>

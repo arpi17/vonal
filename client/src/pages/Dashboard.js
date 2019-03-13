@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 
 import {
@@ -13,7 +12,6 @@ import {
 function Dashboard() {
   return (
     <React.Fragment>
-      <Header />
       <DashMain>
         <DashCardContainer>
           <DashCard as={Link} to="/create">

@@ -15,7 +15,7 @@ class Header extends Component {
     const headerActions = isAuthenticated ? (
       <div>
         <UserName>{this.props.auth.user.name}</UserName>
-        <Link to="/login" onClick={this.props.logoutUser}>
+        <Link to="/" onClick={this.props.logoutUser}>
           Sign out
         </Link>
       </div>

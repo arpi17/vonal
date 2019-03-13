@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import colors from './colors';
+import sizes from './sizes';
 
 // @args: areas: 'image image content'
 export const Grid = styled.div`
-  height: 100vh;
+  height: calc(100vh - ${sizes.headerHeight});
   width: 100vw;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

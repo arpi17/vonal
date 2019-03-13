@@ -19,6 +19,7 @@ import Contact from './pages/Contact';
 
 // Components
 import PrivateRoute from './components/common/PrivateRoute';
+import Header from './components/common/Header';
 
 // Redux
 import store from './store';
@@ -49,6 +50,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <React.Fragment>
+            <Header />
             <Route
               exact
               path="/"
