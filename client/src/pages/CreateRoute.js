@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import mapboxgl from 'mapbox-gl';
 
-import Geolocator from '../components/buttons/Geolocator';
-import Map from '../components/maps/Map';
+// import Map from '../components/maps/Map';
 import SearchBar from '../components/user-input/SearchBar';
-import RouteInitButton from '../components/buttons/RouteInitButton';
 
-import { setDraw, setRouteLayer } from '../utils/setRoute';
+// Styled-components
+import {
+  CreateRouteMain,
+  MapContainer,
+  Map,
+  DescContainer
+} from '../styles/CreatePage';
+
+// utils
+import setDraw from '../utils/setDraw';
+import setRouteLayer from '../utils/setRouteLayer';
 import parseLocation from '../utils/parseLocation';
+import getBoundingCoords from '../utils/getBoundingCoords';
 
 import { mapboxToken } from '../accessToken';
 import MapData from '../components/user-input/MapData';
@@ -22,23 +30,26 @@ class CreateRoute extends Component {
       isLoading: true,
       isRouteInitialised: false,
       route: {
-        coutry: '', 
+        country: '',
         city: '',
         title: '',
         description: '',
         tags: [],
         coords: [],
-        type: 'walking'
+        type: 'walking',
+        geometry: '',
+        mapURL: ''
       },
       currentTag: ''
     };
-    this.handleGeolocatorClick = this.handleGeolocatorClick.bind(this);
+
     this.handleRouteInitClick = this.handleRouteInitClick.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
     this.handleAddTagClick = this.handleAddTagClick.bind(this);
     this.handleDeleteTagClick = this.handleDeleteTagClick.bind(this);
     this.handleDrawRouteClick = this.handleDrawRouteClick.bind(this);
-    this.getLocationName = this.getLocationName.bind(this);
+    this.setLocationName = this.setLocationName.bind(this);
+    this.handleCreateRouteClick = this.handleCreateRouteClick.bind(this);
   }
 
   componentDidMount() {
@@ -50,22 +61,20 @@ class CreateRoute extends Component {
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v9',
       center: [lng, lat],
-      zoom
+      zoom,
+      preserveDrawingBuffer: true
     });
 
-    this.setState({ map, isLoading: false });
-  }
+    const geolocator = new mapboxgl.GeolocateControl({
+      fitBoundsOptions: {
+        maxZoom: 13
+      },
+      showUserLocation: false
+    });
 
-  handleGeolocatorClick() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const { longitude, latitude } = pos.coords;
-        this.state.map.flyTo({
-          center: [longitude, latitude],
-          zoom: 15
-        });
-      });
-    }
+    map.addControl(geolocator);
+
+    this.setState({ map, isLoading: false });
   }
 
   handleRouteInitClick() {
@@ -136,7 +145,6 @@ class CreateRoute extends Component {
       route: { type }
     } = this.state;
     const coords = this.state.route.coords.join(';');
-
     const url = `
       https://api.mapbox.com/directions/v5/mapbox/${type}/${coords}?geometries=geojson&access_token=${mapboxToken}
     `;
@@ -144,27 +152,35 @@ class CreateRoute extends Component {
     fetch(url)
       .then(res => res.json())
       .then(data => {
-        const coords = data.routes[0].geometry;
+        const geometry = data.routes[0].geometry;
 
         if (map.getSource('route')) {
           map.removeLayer('route');
           map.removeSource('route');
         } else {
-          map.addLayer(setRouteLayer(coords));
+          map.addLayer(setRouteLayer(geometry));
         }
+
+        this.setState({
+          route: {
+            ...this.state.route,
+            geometry
+          }
+        });
       });
   }
 
   setCoords(e) {
-    // Which features to add???
     this.removeRoute();
-    const coords = e.features[0].geometry.coordinates;
+    const lastFeature = e.features.length - 1;
+    const coords = e.features[lastFeature].geometry.coordinates;
     this.setState({
       route: {
         ...this.state.route,
         coords
       }
     });
+    this.setLocationName();
   }
 
   removeRoute() {
@@ -177,7 +193,7 @@ class CreateRoute extends Component {
     }
   }
 
-  getLocationName() {
+  setLocationName() {
     const { coords } = this.state.route;
     if (coords.length > 0) {
       const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${
@@ -193,66 +209,76 @@ class CreateRoute extends Component {
               country,
               city
             }
-          })
+          });
         });
     }
+  }
+
+  handleCreateRouteClick() {
+    const {
+      map,
+      route: { coords }
+    } = this.state;
+
+    const bound = getBoundingCoords(coords);
+    const boundOpts = {
+      padding: {
+        top: 50,
+        bottom: 50,
+        left: 25,
+        right: 25
+      }
+    };
+
+    map.setMinZoom().fitBounds(bound, boundOpts);
+    map.on('zoomend', () => {
+      const mapURL = map.getCanvas().toDataURL('image/png');
+      this.setState({
+        route: {
+          ...this.state.route,
+          mapURL
+        }
+      });
+    });
   }
 
   render() {
     const {
       map,
       isLoading,
-      isRouteInitialised,
       route: { title, description, tags, type },
       currentTag
     } = this.state;
 
     return (
-      <div>
-        <Link to="/dashboard">&larr; Dashboard</Link>
-        <h1>Create Your Own Route</h1>
-        <SearchBar map={map} isLoading={isLoading} accessToken={mapboxToken} />
-        <Geolocator onClick={this.handleGeolocatorClick} />
-        <div style={mapAndDescStyle}>
-          <Map
-            mapRef={el => (this.mapContainer = el)}
-            isRouteInitialised={isRouteInitialised}
+      <CreateRouteMain>
+        <MapContainer>
+          <SearchBar
+            map={map}
+            isLoading={isLoading}
+            accessToken={mapboxToken}
           />
-          {!isRouteInitialised ? (
-            <RouteInitButton
-              onClick={this.handleRouteInitClick}
-              style={buttonStyle}
-            />
-          ) : (
-            <MapData
-              title={title}
-              description={description}
-              currentTag={currentTag}
-              tags={tags}
-              type={type}
-              onChange={this.handleDataChange}
-              addTagClick={this.handleAddTagClick}
-              deleteTagClick={this.handleDeleteTagClick}
-              drawRouteClick={this.handleDrawRouteClick}
-            />
-          )}
-        </div>
-      </div>
+
+          <Map ref={el => (this.mapContainer = el)} />
+          <button onClick={this.handleRouteInitClick}>Start Drawing</button>
+        </MapContainer>
+        <DescContainer>
+          <MapData
+            title={title}
+            description={description}
+            currentTag={currentTag}
+            tags={tags}
+            type={type}
+            onChange={this.handleDataChange}
+            addTagClick={this.handleAddTagClick}
+            deleteTagClick={this.handleDeleteTagClick}
+            drawRouteClick={this.handleDrawRouteClick}
+            createRouteClick={this.handleCreateRouteClick}
+          />
+        </DescContainer>
+      </CreateRouteMain>
     );
   }
 }
-
-// FOR DEVELOPEMENT ONLY
-const mapAndDescStyle = {
-  width: '80%',
-  marginTop: '20px',
-  display: 'flex',
-  justifyContent: 'space-around'
-};
-
-const buttonStyle = {
-  width: '100px',
-  height: '30px'
-};
 
 export default CreateRoute;

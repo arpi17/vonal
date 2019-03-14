@@ -9,7 +9,6 @@ class SearchBar extends Component {
     this.geocoderRef = React.createRef();
   }
 
-  // TODO: Clean up this mess
   componentDidUpdate(prevProps) {
     if (prevProps.isLoading !== this.props.isLoading) {
       const { map, accessToken } = this.props;

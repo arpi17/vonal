@@ -3,7 +3,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
 // @desc:   set up MapboxDraw object
 // @return: draw object
-export const setDraw = () => {
+const setDraw = () => {
   const draw = new MapboxDraw({
     displayControlsDefault: false,
     controls: {
@@ -29,7 +29,7 @@ export const setDraw = () => {
           'line-color': '#3b9ddd',
           'line-dasharray': [0.2, 2],
           'line-width': 4,
-          'line-opacity': 0.7
+          'line-opacity': 1
         }
       },
       // vertex point halos
@@ -67,26 +67,4 @@ export const setDraw = () => {
   return draw;
 };
 
-// @desc:   Create a new route layer
-// @return: route layer object
-export const setRouteLayer = coords => ({
-  id: 'route',
-  type: 'line',
-  source: {
-    type: 'geojson',
-    data: {
-      type: 'Feature',
-      properties: {},
-      geometry: coords
-    }
-  },
-  layout: {
-    'line-join': 'round',
-    'line-cap': 'round'
-  },
-  paint: {
-    'line-color': '#3b9ddd',
-    'line-width': 8,
-    'line-opacity': 0.8
-  }
-});
+export default setDraw;

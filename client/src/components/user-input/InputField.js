@@ -15,8 +15,6 @@ function InputField(props) {
     error
   } = props;
 
-  const errorMessage = <ErrorMsg>{error}</ErrorMsg>;
-
   return (
     <InputFieldGroup>
       <label>
@@ -31,7 +29,7 @@ function InputField(props) {
           error={error}
         />
       </label>
-      {error && errorMessage}
+      {error && <ErrorMsg>{error}</ErrorMsg>}
     </InputFieldGroup>
   );
 }
