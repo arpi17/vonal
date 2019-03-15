@@ -13,13 +13,11 @@ const parseLocation = features => {
   while (i >= 0 && !(country && city)) {
     // Parse country
     if (!country && features[i].place_type.includes('country')) {
-      let index = features[i].place_type.indexOf('country');
-      country = features[i].place_name.split(',')[index].trim();
+      country = features[i].place_name.split(',')[0].trim();
     }
     // Parse city
     if (!city && features[i].place_type.includes('place')) {
-      let index = features[i].place_type.indexOf('place');
-      city = features[i].place_name.split(',')[index].trim();
+      city = features[i].place_name.split(',')[0].trim();
     }
     i--;
   }
