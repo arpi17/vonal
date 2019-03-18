@@ -9,6 +9,7 @@ function MapData({
   currentTag,
   tags,
   type,
+  errors,
   onChange,
   addTagClick,
   deleteTagClick,
@@ -25,6 +26,7 @@ function MapData({
           name="title"
           value={title}
           onChange={onChange}
+          error={errors.title}
         />
         <br />
         <TextAreaField
