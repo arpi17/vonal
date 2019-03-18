@@ -32,8 +32,11 @@ const RouteSchema = new Schema({
     type: String
   },
   tags: [String],
-  coords: [Array],
+  coords: Array,
   geometry: {
+    type: Object
+  },
+  thumbnailURL: {
     type: String
   },
   date: {
