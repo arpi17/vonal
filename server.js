@@ -17,8 +17,8 @@ mongoose
 require('./config/passport')(passport);
 
 // Application-level middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.urlencoded({ limit: '1mb', extended: false }));
 app.use(morgan('tiny'));
 app.use(passport.initialize());
 

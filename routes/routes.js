@@ -49,7 +49,8 @@ router.post(
       'description',
       'tags',
       'coords',
-      'geometry'
+      'geometry',
+      'thumbnailURL'
     ];
     for (field of routeFields) {
       if (req.body[field]) routeData[field] = req.body[field];

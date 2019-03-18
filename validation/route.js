@@ -17,7 +17,8 @@ module.exports = function(req, res, next) {
   }
   // Description (if provided)
   if (description && !validator.isLength(description, { min: 10, max: 500 })) {
-    req.errors.description = 'Title must be between 10 and 500 characters';
+    req.errors.description =
+      'Description (if provided) must be between 10 and 500 characters';
   }
   // Tags (if provided)
   if (
