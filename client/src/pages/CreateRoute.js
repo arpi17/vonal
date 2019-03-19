@@ -46,7 +46,9 @@ class CreateRoute extends Component {
         coords: [],
         type: 'walking',
         geometry: '',
-        thumbnailURL: ''
+        thumbnail: {
+          URL: ''
+        }
       },
       currentTag: '',
       errors: {}
@@ -237,7 +239,9 @@ class CreateRoute extends Component {
           this.setState({
             route: {
               ...this.state.route,
-              thumbnailURL: base64data
+              thumbnail: {
+                URL: base64data
+              }
             }
           });
 
