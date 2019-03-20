@@ -14,6 +14,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import CreateRoute from './pages/CreateRoute';
+import MyRoutes from './pages/MyRoutes';
 import Discover from './pages/Discover';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -73,6 +74,9 @@ class App extends Component {
             </Switch>
             <Switch>
               <PrivateRoute exact path="/create" component={CreateRoute} />
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path="/my-routes" component={MyRoutes} />
             </Switch>
           </React.Fragment>
         </Router>

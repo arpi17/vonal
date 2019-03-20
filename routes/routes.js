@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-// Map Model
+// Route Model
 const Route = require('../models/Route');
+const User = require('../models/User');
 
 // Validator
 const validateRoute = require('../validation/route');
@@ -31,6 +32,36 @@ router.get('/', (req, res) => {
     })
     .catch(err => console.log(err));
 });
+
+// FIXME: get the correct query from database
+// @route   GET /routes/:id
+// @desc    Get routes created by the current user
+// @query   country=country_name&city=city_name&type=type_name
+// @access  Private
+router.get(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    // Only let users get their own routes
+    if (req.user.id === req.params.id) {
+      // { author: { _id: req.param.id } }
+      // { title: 'Towards the Frog Lake' }
+      // Route
+      // .find({ author: { _id: req.params.id, name: 'Arpi' } })
+      // .populate('users')
+      // .find({ author: { _id: req.params.id, name: 'Arpi' } })
+      User.findById(req.params.id)
+        .populate('routes', ['title'])
+        .then(routes => {
+          // routes.sort({ date: -1 });
+          res.json(routes);
+        })
+        .catch(err => console.log(err));
+    } else {
+      return res.status(403).json({ auth: 'Unauthorized request' });
+    }
+  }
+);
 
 // @route   POST /routes
 // @desc    Create or modify a route

@@ -44,6 +44,18 @@ export const getRoutes = filter => dispatch => {
     .catch(err => console.log(err));
 };
 
+export const getMyRoutes = userID => dispatch => {
+  axios
+    .get('/routes/:userID')
+    .then(res => {
+      dispatch({
+        type: GET_ROUTES,
+        routes: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
 // Set filter
 export const setFilter = filter => {
   return {
