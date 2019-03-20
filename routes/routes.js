@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-// Route Model
+// Models
 const Route = require('../models/Route');
 const User = require('../models/User');
 
@@ -44,16 +44,10 @@ router.get(
   (req, res) => {
     // Only let users get their own routes
     if (req.user.id === req.params.id) {
-      // { author: { _id: req.param.id } }
-      // { title: 'Towards the Frog Lake' }
-      // Route
-      // .find({ author: { _id: req.params.id, name: 'Arpi' } })
-      // .populate('users')
-      // .find({ author: { _id: req.params.id, name: 'Arpi' } })
       User.findById(req.params.id)
-        .populate('routes', ['title'])
+        .populate('routes')
         .then(routes => {
-          // routes.sort({ date: -1 });
+          routes.sort({ date: -1 });
           res.json(routes);
         })
         .catch(err => console.log(err));
@@ -83,17 +77,31 @@ router.post(
       'geometry',
       'thumbnail'
     ];
+
     for (field of routeFields) {
       if (req.body[field]) routeData[field] = req.body[field];
     }
 
-    routeData.author = {
-      _id: req.user.id,
-      name: req.user.name
-    };
+    routeData.author = req.user.id;
 
-    new Route(routeData).save().then(route => res.json(route));
+    // Create new route and save its reference to the 'User' model
+    new Route(routeData).save().then(route => {
+      User.findByIdAndUpdate(
+        req.user.id,
+        { $push: { routes: route._id } },
+        { new: true }
+      );
+      res.json(route);
+    });
   }
 );
+
+router.get('/test/:id', (req, res) => {
+  User.findById(req.params.id)
+    .populate('routes', ['title', 'country', 'city'])
+    .then(user => {
+      res.json(user.routes);
+    });
+});
 
 module.exports = router;

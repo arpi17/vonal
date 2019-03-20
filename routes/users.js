@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 const passport = require('passport');
 
-// User Model
+// Models
 const User = require('../models/User');
 
 // Validators
@@ -85,7 +85,8 @@ router.get(
     res.json({
       id: req.user.id,
       name: req.user.name,
-      email: req.user.email
+      email: req.user.email,
+      routes: req.user.routes
     });
   }
 );

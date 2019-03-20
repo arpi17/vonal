@@ -3,14 +3,8 @@ const Schema = mongoose.Schema;
 
 const RouteSchema = new Schema({
   author: {
-    _id: {
-      type: Schema.Types.ObjectId,
-      ref: 'users'
-    },
-    name: {
-      type: String,
-      required: true
-    }
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   country: {
     type: String,
@@ -47,4 +41,4 @@ const RouteSchema = new Schema({
   }
 });
 
-module.exports = Route = mongoose.model('routes', RouteSchema);
+module.exports = Route = mongoose.model('Route', RouteSchema);
