@@ -26,36 +26,12 @@ router.get('/', (req, res) => {
     .sort({ date: -1 })
     .then(routes => {
       if (!routes) {
-        req.errors.noroutes = 'There are no routes';
-        return res.status(404).json(req.errors);
+        return res.status(404).json({ noroutes: 'There are no routes' });
       }
       return res.json(routes);
     })
     .catch(err => console.log(err));
 });
-
-// TEST: test for unauthorized users
-// TODO: Move this route to the users
-// @route   GET /routes/:id
-// @desc    Get routes created by the current user
-// @access  Private
-router.get(
-  '/:id',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    // Only let users get their own routes
-    if (req.user.id === req.params.id) {
-      User.findById(req.params.id)
-        .populate('routes')
-        .then(user => {
-          res.json(user.routes);
-        })
-        .catch(err => console.log(err));
-    } else {
-      return res.status(403).json({ auth: 'Unauthorized request' });
-    }
-  }
-);
 
 // @route   POST /routes
 // @desc    Create or modify a route
@@ -114,7 +90,7 @@ router.delete(
           });
         } else {
           return res.status(403).json({
-            notauthorized: 'You are not authorized to delete this route'
+            unauthorized: 'You are not authorized to delete this route'
           });
         }
       })

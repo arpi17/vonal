@@ -78,6 +78,28 @@ router.post('/login', validateLogin, (req, res) => {
   });
 });
 
+// TEST: test for unauthorized users
+// @route   GET /users/myroutes/:id
+// @desc    Get routes created by the current user
+// @access  Private
+router.get(
+  '/myroutes/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    // Only let users get their own routes
+    if (req.user.id === req.params.id) {
+      User.findById(req.params.id)
+        .populate('routes')
+        .then(user => {
+          res.json(user.routes);
+        })
+        .catch(err => console.log(err));
+    } else {
+      return res.status(403).json({ unauthorized: 'Unauthorized request' });
+    }
+  }
+);
+
 router.get(
   '/current',
   passport.authenticate('jwt', { session: false }),
