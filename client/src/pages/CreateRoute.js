@@ -133,29 +133,23 @@ class CreateRoute extends Component {
   }
 
   handleAddTagClick() {
-    const name = this.state.currentTag.trim().toLowerCase();
-    if (this.state.route.tags.every(tag => tag.name !== name) && name !== '') {
+    const newTag = this.state.currentTag.trim().toLowerCase();
+    if (this.state.route.tags.every(tag => tag !== newTag) && newTag !== '') {
       this.setState(state => ({
         route: {
           ...state.route,
-          tags: [
-            ...state.route.tags,
-            {
-              id: name,
-              name
-            }
-          ]
+          tags: [...state.route.tags, newTag]
         },
         currentTag: ''
       }));
     }
   }
 
-  handleDeleteTagClick(id) {
+  handleDeleteTagClick(tagName) {
     this.setState({
       route: {
         ...this.state.route,
-        tags: this.state.route.tags.filter(tag => tag.id !== id)
+        tags: this.state.route.tags.filter(tag => tag !== tagName)
       }
     });
   }
@@ -268,7 +262,7 @@ class CreateRoute extends Component {
     const {
       map,
       isLoading,
-      route: { title, description, tags, type },
+      route: { title, description, tags, type, coords },
       currentTag,
       errors
     } = this.state;
@@ -290,6 +284,7 @@ class CreateRoute extends Component {
             currentTag={currentTag}
             tags={tags}
             type={type}
+            coords={coords}
             errors={errors}
             onChange={this.handleDataChange}
             addTagClick={this.handleAddTagClick}

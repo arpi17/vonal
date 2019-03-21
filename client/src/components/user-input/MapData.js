@@ -3,12 +3,15 @@ import React from 'react';
 import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 
+import uuidv4 from 'uuid/v4';
+
 function MapData({
   title,
   description,
   currentTag,
   tags,
   type,
+  coords,
   errors,
   onChange,
   addTagClick,
@@ -50,9 +53,9 @@ function MapData({
           <div className="tag-container">
             <ul>
               {tags.map(tag => (
-                <li key={tag.id}>
-                  {tag.name}{' '}
-                  <button type="button" onClick={() => deleteTagClick(tag.id)}>
+                <li key={uuidv4()}>
+                  {tag}{' '}
+                  <button type="button" onClick={() => deleteTagClick(tag)}>
                     &times;
                   </button>
                 </li>
@@ -80,7 +83,9 @@ function MapData({
           />
         </div>
       </form>
-      <button onClick={createRouteClick}>Create route</button>
+      <button onClick={createRouteClick} disabled={coords.length === 0}>
+        Create route
+      </button>
     </div>
   );
 }
