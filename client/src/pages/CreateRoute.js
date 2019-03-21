@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import { mapboxToken } from '../accessToken';
+import isEqual from 'lodash.isequal';
 
 // Components
 import MapData from '../components/user-input/MapData';
@@ -25,7 +26,6 @@ import setDraw from '../utils/setDraw';
 import setRouteLayer from '../utils/setRouteLayer';
 import parseLocation from '../utils/parseLocation';
 import setOverlay from '../utils/setOverlay';
-import removeRoute from '../utils/removeRoute';
 
 // Set Mapbox Access Token
 mapboxgl.accessToken = mapboxToken;
@@ -36,7 +36,6 @@ class CreateRoute extends Component {
     this.state = {
       map: {},
       isLoading: true,
-      isRouteInitialised: false,
       route: {
         country: '',
         city: '',
@@ -45,7 +44,7 @@ class CreateRoute extends Component {
         tags: [],
         coords: [],
         type: 'walking',
-        geometry: '',
+        geometry: {},
         thumbnail: {
           URL: ''
         }
@@ -54,11 +53,9 @@ class CreateRoute extends Component {
       errors: {}
     };
 
-    this.handleRouteInitClick = this.handleRouteInitClick.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
     this.handleAddTagClick = this.handleAddTagClick.bind(this);
     this.handleDeleteTagClick = this.handleDeleteTagClick.bind(this);
-    this.handleDrawRouteClick = this.handleDrawRouteClick.bind(this);
     this.setLocationName = this.setLocationName.bind(this);
     this.handleCreateRouteClick = this.handleCreateRouteClick.bind(this);
   }
@@ -72,47 +69,52 @@ class CreateRoute extends Component {
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v9',
       center: [lng, lat],
-      zoom,
-      preserveDrawingBuffer: true
+      zoom
     });
 
     const geolocator = new mapboxgl.GeolocateControl({
       fitBoundsOptions: {
-        maxZoom: 13
+        maxZoom: 14
       },
       showUserLocation: false
     });
 
     map.addControl(geolocator);
 
+    const zoomListener = () => {
+      if (map.getZoom() >= 10) {
+        const draw = setDraw();
+        map.on('draw.create', e => this.drawRoute(e));
+        map.on('draw.update', e => this.drawRoute(e));
+        map.on('draw.delete', () => this.removeRoute());
+        map.setMinZoom(10).addControl(draw);
+
+        // Remove event listener
+        map.off('zoomend', zoomListener);
+      }
+    };
+    map.on('zoomend', zoomListener);
+
     this.setState({ map, isLoading: false });
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.errors !== this.props.errors) {
       this.setState({
         errors: this.props.errors
       });
     }
+
+    const prevCoords = prevState.route.coords[0];
+    const newCoords = this.state.route.coords[0] || null;
+    if (newCoords && !isEqual(prevCoords, newCoords)) {
+      this.setLocationName(newCoords);
+    }
   }
 
-  handleRouteInitClick() {
-    const { map, isRouteInitialised } = this.state;
-    if (map.getZoom() < 11) {
-      alert('Please zoom in more to be able to create a local route');
-      return;
-    }
-    if (!isRouteInitialised) {
-      const draw = setDraw();
-      map.on('draw.create', e => this.setCoords(e));
-      map.on('draw.update', e => this.setCoords(e));
-      map.on('draw.delete', () => removeRoute(map));
-
-      this.setState({
-        map: map.setMinZoom(11).addControl(draw),
-        isRouteInitialised: true
-      });
-    }
+  componentWillUnmount() {
+    // IDEA: Save map to localeStorage
+    this.state.map.remove();
   }
 
   handleDataChange(e) {
@@ -158,74 +160,11 @@ class CreateRoute extends Component {
     });
   }
 
-  handleDrawRouteClick() {
-    const {
-      map,
-      route: { type }
-    } = this.state;
-    const coords = this.state.route.coords.join(';');
-    const url = `
-      https://api.mapbox.com/directions/v5/mapbox/${type}/${coords}?geometries=geojson&access_token=${mapboxToken}
-    `;
-
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        const geometry = data.routes[0].geometry;
-        const newLayer = setRouteLayer(geometry);
-
-        removeRoute(map);
-        map.addLayer(newLayer);
-
-        this.setState({
-          route: {
-            ...this.state.route,
-            geometry
-          }
-        });
-      });
-  }
-
-  setCoords(e) {
-    removeRoute(this.state.map);
-    const lastFeature = e.features.length - 1;
-    const coords = e.features[lastFeature].geometry.coordinates;
-    this.setState({
-      route: {
-        ...this.state.route,
-        coords
-      }
-    });
-    this.setLocationName(coords);
-  }
-
-  setLocationName(coords) {
-    if (coords.length > 0) {
-      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${
-        coords[0]
-      }.json?access_token=${mapboxToken}`;
-      fetch(url)
-        .then(res => res.json())
-        .then(data => {
-          const [country, city] = parseLocation(data.features);
-          this.setState({
-            route: {
-              ...this.state.route,
-              country,
-              city
-            }
-          });
-        });
-    }
-  }
-
   handleCreateRouteClick() {
     const {
       route: { coords, geometry }
     } = this.state;
-
     const overlay = setOverlay(geometry, coords);
-
     const url = `
         https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/geojson(${overlay})/auto/400x400?access_token=${mapboxToken}`;
 
@@ -244,14 +183,84 @@ class CreateRoute extends Component {
               }
             }
           });
-
           // Convert the tags array
           const { route } = this.state;
-          route.tags = route.tags.map(tag => tag.name);
-
+          // const newTags = route.tags.map(tag => tag.name);
+          // console.log(newTags);
+          // route.tags = newTags;
           // Send POST request
           this.props.createRoute(route, this.props.history);
         };
+      });
+  }
+
+  drawRoute(e) {
+    const {
+      map,
+      route: { type }
+    } = this.state;
+
+    const lastFeature = e.features.length - 1;
+    const coords = e.features[lastFeature].geometry.coordinates;
+
+    if (coords.length >= 2) {
+      const newCoords = coords.join(';');
+      const url = `
+        https://api.mapbox.com/directions/v5/mapbox/${type}/${newCoords}?geometries=geojson&access_token=${mapboxToken}
+      `;
+
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          const geometry = data.routes[0].geometry;
+          const newLayer = setRouteLayer(geometry);
+
+          this.removeRoute();
+          map.addLayer(newLayer);
+
+          this.setState({
+            route: {
+              ...this.state.route,
+              coords,
+              geometry
+            }
+          });
+        });
+    }
+  }
+
+  removeRoute() {
+    const { map } = this.state;
+    if (map.getSource('route')) {
+      map.removeLayer('route');
+      map.removeSource('route');
+      this.setState({
+        route: {
+          ...this.state.route,
+          country: '',
+          city: '',
+          coords: [],
+          geometry: {}
+        }
+      });
+    } else {
+      return;
+    }
+  }
+
+  setLocationName(coords) {
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coords}.json?access_token=${mapboxToken}`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const [country, city] = parseLocation(data.features);
+        this.setState({
+          route: {
+            ...this.state.route,
+            country,
+            city
+          }
+        });
       });
   }
 
@@ -272,9 +281,7 @@ class CreateRoute extends Component {
             isLoading={isLoading}
             accessToken={mapboxToken}
           />
-
           <Map ref={el => (this.mapContainer = el)} />
-          <button onClick={this.handleRouteInitClick}>Start Drawing</button>
         </MapContainer>
         <DescContainer>
           <MapData
@@ -287,7 +294,6 @@ class CreateRoute extends Component {
             onChange={this.handleDataChange}
             addTagClick={this.handleAddTagClick}
             deleteTagClick={this.handleDeleteTagClick}
-            drawRouteClick={this.handleDrawRouteClick}
             createRouteClick={this.handleCreateRouteClick}
           />
         </DescContainer>

@@ -13,7 +13,6 @@ function MapData({
   onChange,
   addTagClick,
   deleteTagClick,
-  drawRouteClick,
   createRouteClick
 }) {
   return (
@@ -81,7 +80,6 @@ function MapData({
           />
         </div>
       </form>
-      <button onClick={drawRouteClick}>Connect the dots</button>
       <button onClick={createRouteClick}>Create route</button>
     </div>
   );

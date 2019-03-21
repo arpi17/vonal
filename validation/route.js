@@ -29,7 +29,7 @@ module.exports = function(req, res, next) {
   }
 
   if (!isEmpty(req.errors)) {
-    return res.status(404).json(req.errors);
+    return res.status(400).json(req.errors);
   }
 
   next();
