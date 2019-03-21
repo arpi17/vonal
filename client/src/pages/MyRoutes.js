@@ -8,7 +8,7 @@ export class MyRoutes extends Component {
   static propTypes = {
     getMyRoutes: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
-    routes: PropTypes.array
+    routes: PropTypes.object
   };
 
   constructor(props) {

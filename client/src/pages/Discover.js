@@ -54,6 +54,8 @@ class Discover extends Component {
     const { country, city, type } = this.state;
     const { routes, filter } = this.props.routes;
 
+    // TODO: Check if the properties exist first
+    // TODO: Move feed to its own component
     const routesFeed = routes.map(route => (
       <div key={route._id}>
         <img src={route.thumbnail.URL} alt="" width="200px" height="200px" />
@@ -62,6 +64,7 @@ class Discover extends Component {
       </div>
     ));
 
+    // TODO: Remove logging
     console.log('Rendered');
     return (
       <div>

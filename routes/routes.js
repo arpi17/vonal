@@ -22,6 +22,7 @@ router.get('/', (req, res) => {
   }
 
   Route.find(routeQuery)
+    .populate('author', 'name')
     .sort({ date: -1 })
     .then(routes => {
       if (!routes) {
@@ -33,10 +34,10 @@ router.get('/', (req, res) => {
     .catch(err => console.log(err));
 });
 
-// FIXME: get the correct query from database
+// TEST: test for unauthorized users
+// TODO: Move this route to the users
 // @route   GET /routes/:id
 // @desc    Get routes created by the current user
-// @query   country=country_name&city=city_name&type=type_name
 // @access  Private
 router.get(
   '/:id',
@@ -46,9 +47,8 @@ router.get(
     if (req.user.id === req.params.id) {
       User.findById(req.params.id)
         .populate('routes')
-        .then(routes => {
-          routes.sort({ date: -1 });
-          res.json(routes);
+        .then(user => {
+          res.json(user.routes);
         })
         .catch(err => console.log(err));
     } else {
@@ -86,22 +86,40 @@ router.post(
 
     // Create new route and save its reference to the 'User' model
     new Route(routeData).save().then(route => {
-      User.findByIdAndUpdate(
-        req.user.id,
-        { $push: { routes: route._id } },
-        { new: true }
-      );
-      res.json(route);
+      User.findByIdAndUpdate(req.user.id, {
+        $push: { routes: route._id }
+      }).then(() => res.json(route));
     });
   }
 );
 
-router.get('/test/:id', (req, res) => {
-  User.findById(req.params.id)
-    .populate('routes', ['title', 'country', 'city'])
-    .then(user => {
-      res.json(user.routes);
-    });
-});
+// TEST: removing others' routes
+// @route   DELETE /routes/:id
+// @desc    Delete a route completely
+// @access  Private
+router.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Route.findById(req.params.id)
+      .then(route => {
+        // Only let users to delete their own routes
+        if (route.author !== req.user.id) {
+          route.remove();
+          // Remove the route from the "My routes" collection too
+          User.findById(req.user.id).then(user => {
+            const removeIndex = user.routes.indexOf(req.params.id);
+            user.routes.splice(removeIndex, 1);
+            user.save().then(user => res.json(user));
+          });
+        } else {
+          return res.status(403).json({
+            notauthorized: 'You are not authorized to delete this route'
+          });
+        }
+      })
+      .catch(err => res.status(404).json({ notfound: 'Route not found' }));
+  }
+);
 
 module.exports = router;

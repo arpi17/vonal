@@ -46,7 +46,7 @@ export const getRoutes = filter => dispatch => {
 
 export const getMyRoutes = userID => dispatch => {
   axios
-    .get('/routes/:userID')
+    .get(`routes/${userID}`)
     .then(res => {
       dispatch({
         type: GET_ROUTES,
