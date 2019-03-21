@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getMyRoutes } from '../actions/routeActions';
+import { getMyRoutes, clearRoutes } from '../actions/routeActions';
 
 export class MyRoutes extends Component {
   static propTypes = {
     getMyRoutes: PropTypes.func.isRequired,
+    clearRoutes: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     routes: PropTypes.object
   };
@@ -24,6 +25,10 @@ export class MyRoutes extends Component {
     this.props.getMyRoutes(id);
   }
 
+  componentWillUnmount() {
+    this.props.clearRoutes();
+  }
+
   render() {
     return (
       <div>
@@ -39,7 +44,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getMyRoutes
+  getMyRoutes,
+  clearRoutes
 };
 
 export default connect(

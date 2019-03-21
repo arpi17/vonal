@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getRoutes, setFilter } from '../actions/routeActions';
+import { getRoutes, clearRoutes, setFilter } from '../actions/routeActions';
 
 // utils
 // import compareRoutes from '../utils/compareRoutes';
@@ -11,6 +11,7 @@ import { getRoutes, setFilter } from '../actions/routeActions';
 class Discover extends Component {
   static propTypes = {
     getRoutes: PropTypes.func.isRequired,
+    clearRoutes: PropTypes.func.isRequired,
     setFilter: PropTypes.func.isRequired,
     routes: PropTypes.shape({
       routes: PropTypes.array,
@@ -32,6 +33,10 @@ class Discover extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+  }
+
+  componentWillUnmount() {
+    this.props.clearRoutes();
   }
 
   handleChange(e) {
@@ -140,6 +145,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getRoutes,
+  clearRoutes,
   setFilter
 };
 

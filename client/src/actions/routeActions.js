@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-import { GET_ERRORS, GET_ROUTES, SET_FILTER } from './actionTypes';
+import {
+  GET_ERRORS,
+  GET_ROUTES,
+  CLEAR_ROUTES,
+  SET_FILTER
+} from './actionTypes';
 
 // Create a route
 export const createRoute = (route, history) => dispatch => {
@@ -54,6 +59,13 @@ export const getMyRoutes = userID => dispatch => {
       });
     })
     .catch(err => console.log(err));
+};
+
+// Clear all routes
+export const clearRoutes = () => {
+  return {
+    type: CLEAR_ROUTES
+  };
 };
 
 // Set filter
