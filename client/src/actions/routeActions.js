@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   GET_ERRORS,
   GET_ROUTES,
+  DELETE_ROUTE,
   CLEAR_ROUTES,
   SET_FILTER
 } from './actionTypes';
@@ -49,6 +50,7 @@ export const getRoutes = filter => dispatch => {
     .catch(err => console.log(err));
 };
 
+// Get own routes
 export const getMyRoutes = userID => dispatch => {
   axios
     .get(`users/myroutes/${userID}`)
@@ -56,6 +58,19 @@ export const getMyRoutes = userID => dispatch => {
       dispatch({
         type: GET_ROUTES,
         routes: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+// Delete an own route
+export const deleteRoute = id => dispatch => {
+  axios
+    .delete(`routes/${id}`)
+    .then(res => {
+      dispatch({
+        type: DELETE_ROUTE,
+        routes: res.data.routes
       });
     })
     .catch(err => console.log(err));

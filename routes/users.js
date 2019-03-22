@@ -78,7 +78,6 @@ router.post('/login', validateLogin, (req, res) => {
   });
 });
 
-// TEST: test for unauthorized users
 // @route   GET /users/myroutes/:id
 // @desc    Get routes created by the current user
 // @access  Private

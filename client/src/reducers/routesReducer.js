@@ -1,4 +1,9 @@
-import { GET_ROUTES, CLEAR_ROUTES, SET_FILTER } from '../actions/actionTypes';
+import {
+  GET_ROUTES,
+  DELETE_ROUTE,
+  CLEAR_ROUTES,
+  SET_FILTER
+} from '../actions/actionTypes';
 
 const initialState = {
   routes: [],
@@ -12,6 +17,11 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_ROUTES:
+      return {
+        ...state,
+        routes: action.routes
+      };
+    case DELETE_ROUTE:
       return {
         ...state,
         routes: action.routes

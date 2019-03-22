@@ -34,7 +34,7 @@ router.get('/', (req, res) => {
 });
 
 // @route   POST /routes
-// @desc    Create or modify a route
+// @desc    Create a route
 // @access  Private
 router.post(
   '/',
@@ -69,7 +69,31 @@ router.post(
   }
 );
 
-// TEST: removing others' routes
+// @route   PUT /routes/:id
+// @desc    Update a route
+// @access  Private
+router.put(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Route.findById(req.params.id).then(route => {
+      if (route.author.toString() === req.user.id) {
+        for (let key of Object.keys(req.body)) {
+          route[key] = req.body[key];
+        }
+        // IDEA: Response body is not neccessary
+        route.save().then(route => {
+          res.status(200).json(route);
+        });
+      } else {
+        return res.status(403).json({
+          unauthorized: 'You are not authorized to update this route'
+        });
+      }
+    });
+  }
+);
+
 // @route   DELETE /routes/:id
 // @desc    Delete a route completely
 // @access  Private
@@ -80,14 +104,16 @@ router.delete(
     Route.findById(req.params.id)
       .then(route => {
         // Only let users to delete their own routes
-        if (route.author !== req.user.id) {
+        if (route.author.toString() === req.user.id) {
           route.remove();
           // Remove the route from the "My routes" collection too
-          User.findById(req.user.id).then(user => {
-            const removeIndex = user.routes.indexOf(req.params.id);
-            user.routes.splice(removeIndex, 1);
-            user.save().then(user => res.json(user));
-          });
+          User.findById(req.user.id)
+            .populate('routes')
+            .then(user => {
+              // TEST: Types are the same?
+              user.routes.filter(r => r._id !== req.params.id);
+              user.save().then(user => res.json(user));
+            });
         } else {
           return res.status(403).json({
             unauthorized: 'You are not authorized to delete this route'
