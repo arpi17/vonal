@@ -7,10 +7,15 @@ import InputField from '../components/user-input/InputField';
 import { loginUser } from '../actions/authActions';
 
 // Styled-components
-import { Grid, GridImage } from '../styles/Grid';
-import { Card, CardContent, CardTitle, CardText } from '../styles/Card';
-import { SubmitButton } from '../styles/Button';
-import { LinkText } from '../styles/Text';
+import { Grid, GridImage } from '../components/layout/Grid';
+import {
+  Card,
+  CardContent,
+  CardTitle,
+  CardText
+} from '../components/cards/Card';
+import Button from '../components/buttons/Button';
+import LinkText from '../components/text/LinkText';
 
 class Login extends Component {
   constructor(props) {
@@ -83,7 +88,7 @@ class Login extends Component {
                   onChange={this.handleChange}
                   error={errors.password}
                 />
-                <SubmitButton>Enter</SubmitButton>
+                <Button>Enter</Button>
               </form>
               <CardText>
                 Don't have an account yet? Sign up{' '}

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import colors from './colors';
+import colors from '../../styles/colors';
 
-export const SubmitButton = styled.button`
+const Button = styled.button`
   height: 30px;
   width: 100px;
   padding: 5px 10px;
@@ -13,3 +13,5 @@ export const SubmitButton = styled.button`
   color: black;
   cursor: pointer;
 `;
+
+export default Button;

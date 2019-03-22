@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Input, InputFieldGroup, ErrorMsg } from '../../styles/FormFields';
+import Input from './Input';
+import InputFieldGroup from '../layout/InputFieldGroup';
+import ErrorMsg from '../text/ErrorMsg';
 
 function InputField(props) {
   const {

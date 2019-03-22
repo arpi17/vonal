@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom';
 import { logoutUser } from '../../actions/authActions';
 
 // Styled-components
-import { StyledHeader, Logo, UserName } from '../../styles/StyledHeader';
+import StyledHeader from './StyledHeader';
+import UsernameText from '../text/UsernameText';
+import LogoText from '../text/LogoText';
 
 class Header extends Component {
   render() {
@@ -14,7 +16,7 @@ class Header extends Component {
 
     const headerActions = isAuthenticated ? (
       <div>
-        <UserName>{this.props.auth.user.name}</UserName>
+        <UsernameText>{this.props.auth.user.name}</UsernameText>
         <Link to="/" onClick={this.props.logoutUser}>
           Sign out
         </Link>
@@ -26,7 +28,7 @@ class Header extends Component {
     return (
       <StyledHeader>
         <Link to="/">
-          <Logo>Vonal</Logo>
+          <LogoText>Vonal</LogoText>
         </Link>
         {headerActions}
       </StyledHeader>

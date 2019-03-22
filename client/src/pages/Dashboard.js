@@ -3,11 +3,9 @@ import { Link } from 'react-router-dom';
 
 import Footer from '../components/common/Footer';
 
-import {
-  DashMain,
-  DashCardContainer,
-  DashCard
-} from '../styles/StyledDashboard';
+import DashMain from '../components/main/DashMain';
+import DashCardContainer from '../components/layout/DashCardContainer';
+import DashCard from '../components/cards/DashCard';
 
 function Dashboard() {
   return (

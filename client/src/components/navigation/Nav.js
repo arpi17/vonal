@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import colors from './colors';
-import fonts from './fonts';
+import colors from '../../styles/colors';
+import fonts from '../../styles/fonts';
 
 export const NavList = styled.ul`
   height: 90%;
@@ -10,7 +10,7 @@ export const NavList = styled.ul`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
-  list-decoration: none;
+  list-style: none;
 `;
 
 export const NavItem = styled.li`

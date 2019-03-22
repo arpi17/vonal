@@ -11,12 +11,10 @@ import MapData from '../components/user-input/MapData';
 import SearchBar from '../components/user-input/SearchBar';
 
 // Styled-components
-import {
-  CreateRouteMain,
-  MapContainer,
-  Map,
-  DescContainer
-} from '../styles/CreatePage';
+import CreateRouteMain from '../components/main/CreateRouteMain';
+import MapContainer from '../components/layout/MapContainer';
+import DescContainer from '../components/layout/DescContainer';
+import Map from '../components/map/Map';
 
 // Actions
 import { createRoute } from '../actions/routeActions';

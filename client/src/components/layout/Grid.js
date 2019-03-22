@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import colors from './colors';
-import sizes from './sizes';
+import colors from '../../styles/colors';
+import sizes from '../../styles/sizes';
 
 // @args: areas: 'image image content'
 export const Grid = styled.div`

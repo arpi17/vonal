@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Styled-components
-import { MainTagline, SubTagline } from '../styles/Title';
-import { Grid, GridContent, GridImage } from '../styles/Grid';
-import { Card } from '../styles/Card';
-import { NavList, NavItem } from '../styles/Nav';
+import { MainTagline, SubTagline } from '../components/text/Title';
+import { Grid, GridContent, GridImage } from '../components/layout/Grid';
+import { Card } from '../components/cards/Card';
+import { NavList, NavItem } from '../components/navigation/Nav';
 
 function Landing() {
   return (

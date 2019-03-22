@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { StyledFooter } from '../../styles/StyledFooter';
+
+import StyledFooter from './StyledFooter';
 
 function Footer() {
   return (

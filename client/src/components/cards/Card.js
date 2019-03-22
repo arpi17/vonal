@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import colors from './colors';
-import fonts from './fonts';
+import colors from '../../styles/colors';
+import fonts from '../../styles/fonts';
 
 export const Card = styled.div`
   width: ${props => (props.width ? props.width : '300px')};
