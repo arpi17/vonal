@@ -4,6 +4,16 @@ import { connect } from 'react-redux';
 
 import { getMyRoutes, clearRoutes, deleteRoute } from '../actions/routeActions';
 
+import SectionTitle from '../components/text/SectionTitle';
+import RoutesMain from '../components/main/RoutesMain';
+import RouteCardContainer from '../components/layout/RouteCardContainer';
+import RouteCard from '../components/cards/RouteCard';
+import RouteTitle from '../components/text/RouteTitle';
+import RouteLocation from '../components/text/RouteLocation';
+import Thumbnail from '../components/map/Thumbnail';
+import ThumbnailOverlay from '../components/layout/ThumbnailOverlay';
+import Button from '../components/buttons/Button';
+
 export class MyRoutes extends Component {
   static propTypes = {
     getMyRoutes: PropTypes.func.isRequired,
@@ -38,19 +48,25 @@ export class MyRoutes extends Component {
 
   render() {
     const routesFeed = this.props.routes.routes.map(route => (
-      <div key={route._id}>
-        <img src={route.thumbnail.URL} alt="" width="200px" height="200px" />
-        <p>Created at {route.date}</p>
-        <button onClick={() => this.handleDeleteClick(route._id)}>
-          DELETE
-        </button>
-      </div>
+      <RouteCard key={route._id}>
+        <Thumbnail src={route.thumbnail.URL} />
+        <ThumbnailOverlay>
+          <Button onClick={() => this.handleDeleteClick(route._id)}>
+            Delete
+          </Button>
+          <Button>Edit</Button>
+        </ThumbnailOverlay>
+        <RouteTitle>{route.title}</RouteTitle>
+        <RouteLocation>
+          {route.city}, {route.country}
+        </RouteLocation>
+      </RouteCard>
     ));
     return (
-      <div>
-        <h1>My Routes</h1>
-        {routesFeed}
-      </div>
+      <RoutesMain>
+        <SectionTitle>My Routes</SectionTitle>
+        <RouteCardContainer>{routesFeed}</RouteCardContainer>
+      </RoutesMain>
     );
   }
 }
