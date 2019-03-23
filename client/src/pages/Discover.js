@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 
 import { getRoutes, clearRoutes, setFilter } from '../actions/routeActions';
 
+import RoutesMain from '../components/main/RoutesMain';
+import SectionTitle from '../components/text/SectionTitle';
+import FilterArea from '../components/layout/FilterArea';
+import Filter from '../components/user-input/Filter';
+
 // utils
 // import compareRoutes from '../utils/compareRoutes';
 // TODO: Don't rerender if the routes did not change
@@ -33,6 +38,7 @@ class Discover extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentWillUnmount() {
@@ -55,9 +61,14 @@ class Discover extends Component {
     this.props.setFilter(newFilter);
   }
 
+  handleClick() {
+    const { filter } = this.props.routes;
+    this.props.getRoutes(filter);
+  }
+
   render() {
     const { country, city, type } = this.state;
-    const { routes, filter } = this.props.routes;
+    const { routes } = this.props.routes;
 
     // TODO: Check if the properties exist first
     // TODO: Move feed to its own component
@@ -72,69 +83,20 @@ class Discover extends Component {
     // TODO: Remove logging
     console.log('Rendered');
     return (
-      <div>
-        <h1>Discover Routes</h1>
-        <form>
-          <input
-            type="text"
-            name="country"
-            value={country}
-            placeholder="Country"
+      <RoutesMain>
+        <SectionTitle>Discover Routes</SectionTitle>
+        <FilterArea>
+          <Filter
+            country={country}
+            city={city}
+            type={type}
             onChange={this.handleChange}
             onBlur={this.handleBlur}
+            onClick={this.handleClick}
           />
-          <br />
-          <input
-            type="text"
-            name="city"
-            value={city}
-            placeholder="City"
-            onChange={this.handleChange}
-            onBlur={this.handleBlur}
-          />
-          <br />
-          <label>
-            All
-            <input
-              type="radio"
-              name="type"
-              value=""
-              checked={!type}
-              onChange={this.handleChange}
-              onBlur={this.handleBlur}
-            />
-          </label>
-          <br />
-          <label>
-            Walking
-            <input
-              type="radio"
-              name="type"
-              value="walking"
-              checked={type === 'walking'}
-              onChange={this.handleChange}
-              onBlur={this.handleBlur}
-            />
-          </label>
-          <br />
-          <label>
-            Cycling
-            <input
-              type="radio"
-              name="type"
-              value="cycling"
-              checked={type === 'cycling'}
-              onChange={this.handleChange}
-              onBlur={this.handleBlur}
-            />
-          </label>
-          <br />
-          <button onClick={() => this.props.getRoutes(filter)} type="button">
-            Get Routes
-          </button>
-        </form>
+        </FilterArea>
         {routesFeed}
-      </div>
+      </RoutesMain>
     );
   }
 }

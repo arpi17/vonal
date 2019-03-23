@@ -14,7 +14,9 @@ function InputField(props) {
     checked,
     value,
     onChange,
-    error
+    onBlur,
+    error,
+    width
   } = props;
 
   return (
@@ -28,7 +30,9 @@ function InputField(props) {
           value={value}
           checked={checked}
           onChange={onChange}
+          onBlur={onBlur}
           error={error}
+          width={width}
         />
       </label>
       {error && <ErrorMsg>{error}</ErrorMsg>}
@@ -44,7 +48,9 @@ InputField.propTypes = {
   checked: PropTypes.bool,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  error: PropTypes.string
+  onBlur: PropTypes.func,
+  error: PropTypes.string,
+  width: PropTypes.string
 };
 
 export default InputField;

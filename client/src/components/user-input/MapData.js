@@ -2,6 +2,8 @@ import React from 'react';
 
 import InputField from './InputField';
 import TextAreaField from './TextAreaField';
+import RadioButtonArea from '../layout/RadioButtonArea';
+import RadioButton from '../user-input/RadioButton';
 
 import uuidv4 from 'uuid/v4';
 
@@ -39,6 +41,24 @@ function MapData({
           onChange={onChange}
         />
         <br />
+        <RadioButtonArea>
+          <RadioButton
+            label="Walking"
+            type="radio"
+            name="type"
+            value="walking"
+            checked={type === 'walking'}
+            onChange={onChange}
+          />
+          <RadioButton
+            label="Cycling"
+            type="radio"
+            name="type"
+            value="cycling"
+            checked={type === 'cycling'}
+            onChange={onChange}
+          />
+        </RadioButtonArea>
         <div className="tag-area">
           <InputField
             placeholder="Add tags"
@@ -64,24 +84,6 @@ function MapData({
           </div>
         </div>
         <br />
-        <div className="radio-area">
-          <InputField
-            label="Walking"
-            type="radio"
-            name="type"
-            value="walking"
-            checked={type === 'walking'}
-            onChange={onChange}
-          />
-          <InputField
-            label="Cycling"
-            type="radio"
-            name="type"
-            value="cycling"
-            checked={type === 'cycling'}
-            onChange={onChange}
-          />
-        </div>
       </form>
       <button onClick={createRouteClick} disabled={coords.length === 0}>
         Create route

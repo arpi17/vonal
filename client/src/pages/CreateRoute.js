@@ -175,13 +175,8 @@ class CreateRoute extends Component {
               }
             }
           });
-          // Convert the tags array
-          const { route } = this.state;
-          // const newTags = route.tags.map(tag => tag.name);
-          // console.log(newTags);
-          // route.tags = newTags;
-          // Send POST request
-          this.props.createRoute(route, this.props.history);
+
+          this.props.createRoute(this.state.route, this.props.history);
         };
       });
   }
