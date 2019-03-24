@@ -24,6 +24,7 @@ function MapData({
   onChange,
   addTagClick,
   deleteTagClick,
+  onKeyDown,
   createRouteClick
 }) {
   return (
@@ -70,6 +71,7 @@ function MapData({
             value={currentTag}
             onChange={onChange}
             onClick={addTagClick}
+            onKeyDown={onKeyDown}
             withButton={true}
           />
           <FlexContainer wrap>

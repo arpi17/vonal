@@ -18,6 +18,7 @@ function InputField(props) {
     onChange,
     onBlur,
     onClick,
+    onKeyDown,
     error,
     width,
     withButton
@@ -25,7 +26,6 @@ function InputField(props) {
 
   return (
     <InputFieldGroup>
-      {/* <label> */}
       <label>{label}</label>
       <Input
         placeholder={placeholder}
@@ -35,10 +35,10 @@ function InputField(props) {
         checked={checked}
         onChange={onChange}
         onBlur={onBlur}
+        onKeyDown={onKeyDown}
         error={error}
         width={width}
       />
-      {/* </label> */}
       {error && <ErrorMsg>{error}</ErrorMsg>}
       {withButton && (
         <InputButtonContainer>
@@ -61,6 +61,7 @@ InputField.propTypes = {
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
+  onKeyDown: PropTypes.func,
   error: PropTypes.string,
   width: PropTypes.string,
   withButton: PropTypes.bool

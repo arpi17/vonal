@@ -56,6 +56,7 @@ class CreateRoute extends Component {
     this.handleDeleteTagClick = this.handleDeleteTagClick.bind(this);
     this.setLocationName = this.setLocationName.bind(this);
     this.handleCreateRouteClick = this.handleCreateRouteClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount() {
@@ -150,6 +151,12 @@ class CreateRoute extends Component {
         tags: this.state.route.tags.filter(tag => tag !== tagName)
       }
     });
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === 13) {
+      this.handleAddTagClick();
+    }
   }
 
   handleCreateRouteClick() {
@@ -282,6 +289,7 @@ class CreateRoute extends Component {
             onChange={this.handleDataChange}
             addTagClick={this.handleAddTagClick}
             deleteTagClick={this.handleDeleteTagClick}
+            onKeyDown={this.handleKeyDown}
             createRouteClick={this.handleCreateRouteClick}
           />
         </DescContainer>
