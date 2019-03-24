@@ -1,15 +1,17 @@
 import React from 'react';
 import uuidv4 from 'uuid/v4';
 
+import FormContainer from '../layout/FormContainer';
 import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 import RadioButtonArea from '../layout/RadioButtonArea';
 import RadioButton from '../user-input/RadioButton';
 import Button from '../buttons/Button';
 import FlexContainer from '../layout/FlexContainer';
+import TagArea from '../layout/TagArea';
 import Tag from '../cards/Tag';
 
-// FIXME: Centering
+// TODO: Add tag on enter press
 
 function MapData({
   title,
@@ -25,10 +27,9 @@ function MapData({
   createRouteClick
 }) {
   return (
-    <div>
+    <FormContainer>
       <form>
         <InputField
-          // label="Route Title"
           placeholder="Add title"
           type="text"
           name="title"
@@ -36,16 +37,13 @@ function MapData({
           onChange={onChange}
           error={errors.title}
         />
-        <br />
         <TextAreaField
-          // label="Description"
           placeholder="Add description"
           name="description"
           value={description}
           onChange={onChange}
           error={errors.description}
         />
-        <br />
         <RadioButtonArea>
           <RadioButton
             label="Walking"
@@ -64,18 +62,17 @@ function MapData({
             onChange={onChange}
           />
         </RadioButtonArea>
-        <div className="tag-area">
+        <TagArea>
           <InputField
             placeholder="Add tags"
             type="text"
             name="currentTag"
             value={currentTag}
             onChange={onChange}
+            onClick={addTagClick}
+            withButton={true}
           />
-          <button type="button" onClick={addTagClick}>
-            Add Tag
-          </button>
-          <FlexContainer>
+          <FlexContainer wrap>
             {tags.map(tag => (
               <Tag key={uuidv4()}>
                 {tag}{' '}
@@ -85,13 +82,12 @@ function MapData({
               </Tag>
             ))}
           </FlexContainer>
-        </div>
-        <br />
+        </TagArea>
       </form>
       <Button onClick={createRouteClick} disabled={coords.length === 0} primary>
         Create route
       </Button>
-    </div>
+    </FormContainer>
   );
 }
 

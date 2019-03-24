@@ -10,6 +10,7 @@ const Input = styled.input`
   margin-bottom: ${props => (!props.error ? '0' : '5px')};
   padding: 10px;
   display: block;
+  position: relative;
 
   background: #ffffff;
   border: 1px solid ${props => (!props.error ? '#696969' : colors.error)};
