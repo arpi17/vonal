@@ -21,8 +21,8 @@ function Dashboard() {
           <DashCard as={Link} to="/my-routes">
             my routes
           </DashCard>
-          <DashCard as={Link} to="/bucketlist">
-            bucketlist
+          <DashCard as={Link} to="/saved-routes">
+            saved routes
           </DashCard>
         </DashCardContainer>
       </DashMain>

@@ -119,12 +119,14 @@ router.delete(
         if (route.author.toString() === req.user.id) {
           route.remove();
           // Remove the route from the "My routes" collection too
-          User.findById(req.user.id)
+          User.findByIdAndUpdate(
+            req.user.id,
+            { $pull: { routes: req.params.id } },
+            { new: true }
+          )
             .populate('routes')
             .then(user => {
-              // TEST: Types are the same?
-              user.routes.filter(r => r._id !== req.params.id);
-              user.save().then(user => res.json(user));
+              res.json(user);
             });
         } else {
           return res.status(403).json({

@@ -5,6 +5,8 @@ const DiscoverCard = styled.div`
   border: 1px solid black;
   margin: 0 15px;
   position: relative;
+  color: inherit;
+  text-decoration: none;
 
   &:first-child {
     margin-left: 0;

@@ -86,6 +86,20 @@ export const getMyRoutes = userID => dispatch => {
     .catch(err => console.log(err));
 };
 
+// Get saved routes
+export const getSavedRoutes = () => dispatch => {
+  axios
+    .get('users/saved')
+    .then(res => {
+      // console.log(res.data);
+      dispatch({
+        type: GET_ROUTES,
+        routes: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
 // Delete an own route
 export const deleteRoute = id => dispatch => {
   axios

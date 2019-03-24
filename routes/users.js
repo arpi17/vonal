@@ -7,6 +7,7 @@ const passport = require('passport');
 
 // Models
 const User = require('../models/User');
+const Route = require('../models/Route');
 
 // Validators
 const validateRegistration = require('../validation/register');
@@ -96,6 +97,73 @@ router.get(
     } else {
       return res.status(403).json({ unauthorized: 'Unauthorized request' });
     }
+  }
+);
+
+// @route   GET /users/saved
+// @desc    Get saved routes
+// @access  Private
+router.get(
+  '/saved',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    User.findById(req.user.id)
+      .populate('saved')
+      .then(user => {
+        // Check if route still exists
+        user.saved = user.saved.filter(route => Route.findById(route._id));
+        // FIXME: removed route still persists in db
+        user.save().then(user => {
+          res.json(user.saved);
+        });
+      })
+      .catch(err => console.log(err));
+  }
+);
+
+// @route   PUT /users/saved/:id
+// @desc    Save a route to collection
+// @access  Private
+router.put(
+  '/saved/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Route.findById(req.params.id).then(route => {
+      if (!route) {
+        return res.status(404).json({ notfound: 'Route not found' });
+      }
+      User.findByIdAndUpdate(
+        req.user.id,
+        { $push: { saved: route._id } },
+        { new: true }
+      ).then(user => {
+        res.json(user);
+      });
+    });
+  }
+);
+
+// @route   DELETE /users/saved/:id
+// @desc    Delete a route from collection
+// @access  Private
+router.delete(
+  '/saved/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Route.findById(req.params.id).then(route => {
+      if (!route) {
+        return res.status(404).json({ notfound: 'Route not found' });
+      }
+      User.findByIdAndUpdate(
+        req.user.id,
+        { $pull: { saved: req.params.id } },
+        { new: true }
+      )
+        .then(user => {
+          res.json(user);
+        })
+        .catch(err => console.log(err));
+    });
   }
 );
 

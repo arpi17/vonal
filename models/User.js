@@ -20,6 +20,12 @@ const UserSchema = new Schema({
       ref: 'Route'
     }
   ],
+  saved: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Route'
+    }
+  ],
   date: {
     type: Date,
     default: Date.now

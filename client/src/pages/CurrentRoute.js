@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getCurrentRoute } from '../actions/routeActions';
+import { getCurrentRoute, clearRoute } from '../actions/routeActions';
 
 import RoutesMain from '../components/main/RoutesMain';
 
@@ -10,7 +10,8 @@ export class CurrentRoute extends Component {
   static propTypes = {
     auth: PropTypes.object,
     routes: PropTypes.object.isRequired,
-    getCurrentRoute: PropTypes.func.isRequired
+    getCurrentRoute: PropTypes.func.isRequired,
+    clearRoute: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -29,6 +30,10 @@ export class CurrentRoute extends Component {
     this.setState({
       isLoading: false
     });
+  }
+
+  componentWillUnmount() {
+    this.props.clearRoute();
   }
 
   render() {
@@ -52,7 +57,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getCurrentRoute
+  getCurrentRoute,
+  clearRoute
 };
 
 export default connect(

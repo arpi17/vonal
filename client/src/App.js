@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import CreateRoute from './pages/CreateRoute';
 import MyRoutes from './pages/MyRoutes';
+import SavedRoutes from './pages/SavedRoutes';
 import CurrentRoute from './pages/CurrentRoute';
 import Discover from './pages/Discover';
 import About from './pages/About';
@@ -79,6 +80,13 @@ class App extends Component {
             </Switch>
             <Switch>
               <PrivateRoute exact path="/my-routes" component={MyRoutes} />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path="/saved-routes"
+                component={SavedRoutes}
+              />
             </Switch>
           </React.Fragment>
         </Router>

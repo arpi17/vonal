@@ -51,10 +51,15 @@ class Discover extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  // TODO: !!Decide if you need this!!
-  // componentWillUnmount() {
-  //   this.props.clearRoutes();
-  // }
+  componentWillUnmount() {
+    // TODO: !!Decide if you need this!!
+    // this.props.clearRoutes();
+    this.props.setFilter({
+      country: '',
+      city: '',
+      type: ''
+    });
+  }
 
   handleChange(e) {
     this.setState({
