@@ -3,7 +3,7 @@ import ThumbnailButtonsContainer from '../layout/ThumbnailOverlay';
 
 const RouteCard = styled.div`
   position: relative;
-  height: 400px;
+  height: 380px;
   width: 300px;
   /* flex: 0 1 25%; */
   margin: 15px 15px;

@@ -4,7 +4,8 @@ const sizes = {
   sectionTitleMargin: '35px',
   routeCardWidth: '300px',
   routeCardMargin: '30px',
-  thumbnailSide: '300px'
+  thumbnailSide: '300px',
+  thumbnailSideSmall: '250px'
 };
 
 export default sizes;

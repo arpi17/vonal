@@ -4,8 +4,11 @@ import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 import RadioButtonArea from '../layout/RadioButtonArea';
 import RadioButton from '../user-input/RadioButton';
+import Button from '../buttons/Button';
 
 import uuidv4 from 'uuid/v4';
+
+// FIXME: Centering
 
 function MapData({
   title,
@@ -24,7 +27,7 @@ function MapData({
     <div>
       <form>
         <InputField
-          label="Route Title"
+          // label="Route Title"
           placeholder="Add title"
           type="text"
           name="title"
@@ -34,11 +37,12 @@ function MapData({
         />
         <br />
         <TextAreaField
-          label="Description"
+          // label="Description"
           placeholder="Add description"
           name="description"
           value={description}
           onChange={onChange}
+          error={errors.description}
         />
         <br />
         <RadioButtonArea>
@@ -85,9 +89,9 @@ function MapData({
         </div>
         <br />
       </form>
-      <button onClick={createRouteClick} disabled={coords.length === 0}>
+      <Button onClick={createRouteClick} disabled={coords.length === 0} primary>
         Create route
-      </button>
+      </Button>
     </div>
   );
 }

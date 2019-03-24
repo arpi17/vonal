@@ -3,8 +3,10 @@ import sizes from '../../styles/sizes';
 
 const Thumbnail = styled.img`
   src: ${props => props.src};
-  height: ${sizes.thumbnailSide};
-  width: ${sizes.thumbnailSide};
+  height: ${props =>
+    props.small ? sizes.thumbnailSideSmall : sizes.thumbnailSide};
+  width: ${props =>
+    props.small ? sizes.thumbnailSideSmall : sizes.thumbnailSide};
   alt: 'Route thumbnail';
 `;
 

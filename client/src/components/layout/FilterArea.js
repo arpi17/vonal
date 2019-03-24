@@ -4,7 +4,7 @@ const FilterArea = styled.aside`
   width: 300px;
   height: 70vh;
   border-right: 1px solid black;
-  display: inline-block;
+  box-sizing: border-box;
 `;
 
 export default FilterArea;

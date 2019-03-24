@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TextAreaField({ placeholder, name, label, value, onChange }) {
+import TextArea from './TextArea';
+import ErrorMsg from '../text/ErrorMsg';
+
+function TextAreaField({ placeholder, name, label, value, onChange, error }) {
   return (
     <label>
       <div>{label}</div>
-      <textarea
+      <TextArea
         placeholder={placeholder}
         name={name}
         value={value}
         onChange={onChange}
-        cols="30"
-        rows="10"
+        error={error}
+        // cols="30"
+        // rows="10"
       />
+      <ErrorMsg>{error}</ErrorMsg>
     </label>
   );
 }

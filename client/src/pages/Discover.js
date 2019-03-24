@@ -6,8 +6,12 @@ import { getRoutes, clearRoutes, setFilter } from '../actions/routeActions';
 
 import RoutesMain from '../components/main/RoutesMain';
 import SectionTitle from '../components/text/SectionTitle';
+import FlexContainer from '../components/layout/FlexContainer';
 import FilterArea from '../components/layout/FilterArea';
 import Filter from '../components/user-input/Filter';
+import DiscoverFeed from '../components/layout/DiscoverFeed';
+import DiscoverCard from '../components/cards/DiscoverCard';
+import Thumbnail from '../components/map/Thumbnail';
 
 // utils
 // import compareRoutes from '../utils/compareRoutes';
@@ -73,29 +77,32 @@ class Discover extends Component {
     // TODO: Check if the properties exist first
     // TODO: Move feed to its own component
     const routesFeed = routes.map(route => (
-      <div key={route._id}>
-        <img src={route.thumbnail.URL} alt="" width="200px" height="200px" />
+      <DiscoverCard key={route._id}>
+        <Thumbnail src={route.thumbnail.URL} alt="" small />
         <h3>{route.title}</h3>
         <p>Created by {route.author.name}</p>
-      </div>
+      </DiscoverCard>
     ));
 
     // TODO: Remove logging
+    // FIXME: After getting the routes the filter collapses
     console.log('Rendered');
     return (
       <RoutesMain>
         <SectionTitle>Discover Routes</SectionTitle>
-        <FilterArea>
-          <Filter
-            country={country}
-            city={city}
-            type={type}
-            onChange={this.handleChange}
-            onBlur={this.handleBlur}
-            onClick={this.handleClick}
-          />
-        </FilterArea>
-        {routesFeed}
+        <FlexContainer>
+          <FilterArea>
+            <Filter
+              country={country}
+              city={city}
+              type={type}
+              onChange={this.handleChange}
+              onBlur={this.handleBlur}
+              onClick={this.handleClick}
+            />
+          </FilterArea>
+          <DiscoverFeed>{routesFeed}</DiscoverFeed>
+        </FlexContainer>
       </RoutesMain>
     );
   }
