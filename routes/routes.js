@@ -33,6 +33,18 @@ router.get('/', (req, res) => {
     .catch(err => console.log(err));
 });
 
+// @route   GET /routes/:id
+// @desc    Get single route
+// @access  Public
+router.get('/:id', (req, res) => {
+  Route.findById(req.params.id).then(route => {
+    if (!route) {
+      return res.status(404).json({ noroute: 'Route not found' });
+    }
+    return res.json(route);
+  });
+});
+
 // @route   POST /routes
 // @desc    Create a route
 // @access  Private

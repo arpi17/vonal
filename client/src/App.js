@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import CreateRoute from './pages/CreateRoute';
 import MyRoutes from './pages/MyRoutes';
+import CurrentRoute from './pages/CurrentRoute';
 import Discover from './pages/Discover';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -69,6 +70,7 @@ class App extends Component {
             <Route exact path="/discover" component={Discover} />
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
+            <Route exact path="/routes/:id" component={CurrentRoute} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>

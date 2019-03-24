@@ -3,9 +3,11 @@ import axios from 'axios';
 import {
   GET_ERRORS,
   GET_ROUTES,
+  GET_CURRENT_ROUTE,
   DELETE_ROUTE,
-  CLEAR_ROUTES,
-  SET_FILTER
+  SET_FILTER,
+  CLEAR_ROUTE,
+  CLEAR_ROUTES
 } from './actionTypes';
 
 // Create a route
@@ -50,6 +52,27 @@ export const getRoutes = filter => dispatch => {
     .catch(err => console.log(err));
 };
 
+// Get single route
+export const getCurrentRoute = (id, cachedRoutes = []) => dispatch => {
+  if (cachedRoutes.length > 0) {
+    const [route] = cachedRoutes.filter(r => r._id.toString() === id);
+    return dispatch({
+      type: GET_CURRENT_ROUTE,
+      route
+    });
+  } else {
+    axios
+      .get(`/routes/${id}`)
+      .then(res => {
+        dispatch({
+          type: GET_CURRENT_ROUTE,
+          route: res.data
+        });
+      })
+      .catch(err => console.log(err));
+  }
+};
+
 // Get own routes
 export const getMyRoutes = userID => dispatch => {
   axios
@@ -74,6 +97,13 @@ export const deleteRoute = id => dispatch => {
       });
     })
     .catch(err => console.log(err));
+};
+
+// Clear a single route
+export const clearRoute = () => {
+  return {
+    type: CLEAR_ROUTE
+  };
 };
 
 // Clear all routes

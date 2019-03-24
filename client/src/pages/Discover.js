@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import uuidv4 from 'uuid/v4';
 
 import { getRoutes, clearRoutes, setFilter } from '../actions/routeActions';
@@ -50,9 +51,10 @@ class Discover extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillUnmount() {
-    this.props.clearRoutes();
-  }
+  // TODO: !!Decide if you need this!!
+  // componentWillUnmount() {
+  //   this.props.clearRoutes();
+  // }
 
   handleChange(e) {
     this.setState({
@@ -81,10 +83,11 @@ class Discover extends Component {
 
     // TODO: Check if the properties exist first
     // TODO: Move feed to its own component
+    // FIXME: Link styling inherited
     const routesFeed =
       routes.length > 0 ? (
         routes.map(route => (
-          <DiscoverCard key={route._id}>
+          <DiscoverCard as={Link} to={`routes/${route._id}`} key={route._id}>
             <Thumbnail src={route.thumbnail.URL} alt="" small />
             <RouteTitle>{route.title}</RouteTitle>
             <RouteLocation>
