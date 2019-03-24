@@ -1,12 +1,13 @@
 import React from 'react';
+import uuidv4 from 'uuid/v4';
 
 import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 import RadioButtonArea from '../layout/RadioButtonArea';
 import RadioButton from '../user-input/RadioButton';
 import Button from '../buttons/Button';
-
-import uuidv4 from 'uuid/v4';
+import FlexContainer from '../layout/FlexContainer';
+import Tag from '../cards/Tag';
 
 // FIXME: Centering
 
@@ -74,18 +75,16 @@ function MapData({
           <button type="button" onClick={addTagClick}>
             Add Tag
           </button>
-          <div className="tag-container">
-            <ul>
-              {tags.map(tag => (
-                <li key={uuidv4()}>
-                  {tag}{' '}
-                  <button type="button" onClick={() => deleteTagClick(tag)}>
-                    &times;
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FlexContainer>
+            {tags.map(tag => (
+              <Tag key={uuidv4()}>
+                {tag}{' '}
+                <button type="button" onClick={() => deleteTagClick(tag)}>
+                  &times;
+                </button>
+              </Tag>
+            ))}
+          </FlexContainer>
         </div>
         <br />
       </form>

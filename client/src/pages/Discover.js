@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import uuidv4 from 'uuid/v4';
 
 import { getRoutes, clearRoutes, setFilter } from '../actions/routeActions';
 
@@ -12,6 +13,10 @@ import Filter from '../components/user-input/Filter';
 import DiscoverFeed from '../components/layout/DiscoverFeed';
 import DiscoverCard from '../components/cards/DiscoverCard';
 import Thumbnail from '../components/map/Thumbnail';
+import RouteTitle from '../components/text/RouteTitle';
+import RouteLocation from '../components/text/RouteLocation';
+import RouteAuthor from '../components/text/RouteAuthor';
+import Tag from '../components/cards/Tag';
 
 // utils
 // import compareRoutes from '../utils/compareRoutes';
@@ -76,17 +81,26 @@ class Discover extends Component {
 
     // TODO: Check if the properties exist first
     // TODO: Move feed to its own component
-    const routesFeed = routes.map(route => (
-      <DiscoverCard key={route._id}>
-        <Thumbnail src={route.thumbnail.URL} alt="" small />
-        <h3>{route.title}</h3>
-        <p>Created by {route.author.name}</p>
-      </DiscoverCard>
-    ));
-
-    // TODO: Remove logging
-    // FIXME: After getting the routes the filter collapses
-    console.log('Rendered');
+    const routesFeed =
+      routes.length > 0 ? (
+        routes.map(route => (
+          <DiscoverCard key={route._id}>
+            <Thumbnail src={route.thumbnail.URL} alt="" small />
+            <RouteTitle>{route.title}</RouteTitle>
+            <RouteLocation>
+              {route.city}, {route.country}
+            </RouteLocation>
+            <FlexContainer wrap>
+              {route.tags.map(tag => (
+                <Tag key={uuidv4()}>{tag}</Tag>
+              ))}
+            </FlexContainer>
+            <RouteAuthor>Created by {route.author.name}</RouteAuthor>
+          </DiscoverCard>
+        ))
+      ) : (
+        <h3>No routes found</h3>
+      );
     return (
       <RoutesMain>
         <SectionTitle>Discover Routes</SectionTitle>

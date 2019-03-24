@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 const DiscoverCard = styled.div`
-  height: 300px;
+  height: 65vh;
   border: 1px solid black;
   margin: 0 15px;
+  position: relative;
 
   &:first-child {
     margin-left: 0;
