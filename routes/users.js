@@ -108,7 +108,7 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     User.findById(req.user.id)
-      .populate('saved')
+      .populate({ path: 'saved', populate: { path: 'author' } })
       .then(user => {
         // Check if route still exists
         user.saved = user.saved.filter(route => Route.findById(route._id));

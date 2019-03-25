@@ -7,12 +7,7 @@ import { getMyRoutes, clearRoutes, deleteRoute } from '../actions/routeActions';
 import SectionTitle from '../components/text/SectionTitle';
 import RoutesMain from '../components/main/RoutesMain';
 import RouteCardContainer from '../components/layout/RouteCardContainer';
-import RouteCard from '../components/cards/RouteCard';
-import RouteTitle from '../components/text/RouteTitle';
-import RouteLocation from '../components/text/RouteLocation';
-import Thumbnail from '../components/map/Thumbnail';
-import ThumbnailOverlay from '../components/layout/ThumbnailOverlay';
-import Button from '../components/buttons/Button';
+import RouteCardWrap from '../components/wraps/RouteCardWrap';
 
 export class MyRoutes extends Component {
   static propTypes = {
@@ -48,19 +43,11 @@ export class MyRoutes extends Component {
 
   render() {
     const routesFeed = this.props.routes.routes.map(route => (
-      <RouteCard key={route._id}>
-        <Thumbnail src={route.thumbnail.URL} />
-        <ThumbnailOverlay>
-          <Button onClick={() => this.handleDeleteClick(route._id)}>
-            Delete
-          </Button>
-          <Button>Edit</Button>
-        </ThumbnailOverlay>
-        <RouteTitle>{route.title}</RouteTitle>
-        <RouteLocation>
-          {route.city}, {route.country}
-        </RouteLocation>
-      </RouteCard>
+      <RouteCardWrap
+        key={route._id}
+        route={route}
+        onDeleteClick={this.handleDeleteClick}
+      />
     ));
     return (
       <RoutesMain>

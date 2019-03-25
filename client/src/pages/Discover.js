@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import uuidv4 from 'uuid/v4';
 
 import { getRoutes, clearRoutes, setFilter } from '../actions/routeActions';
 
@@ -12,12 +10,7 @@ import FlexContainer from '../components/layout/FlexContainer';
 import FilterArea from '../components/layout/FilterArea';
 import Filter from '../components/user-input/Filter';
 import DiscoverFeed from '../components/layout/DiscoverFeed';
-import DiscoverCard from '../components/cards/DiscoverCard';
-import Thumbnail from '../components/map/Thumbnail';
-import RouteTitle from '../components/text/RouteTitle';
-import RouteLocation from '../components/text/RouteLocation';
-import RouteAuthor from '../components/text/RouteAuthor';
-import Tag from '../components/cards/Tag';
+import DiscoverCardWrap from '../components/wraps/DiscoverCardWrap';
 
 // utils
 // import compareRoutes from '../utils/compareRoutes';
@@ -86,26 +79,9 @@ class Discover extends Component {
     const { country, city, type } = this.state;
     const { routes } = this.props.routes;
 
-    // TODO: Check if the properties exist first
-    // TODO: Move feed to its own component
-    // FIXME: Link styling inherited
     const routesFeed =
       routes.length > 0 ? (
-        routes.map(route => (
-          <DiscoverCard as={Link} to={`routes/${route._id}`} key={route._id}>
-            <Thumbnail src={route.thumbnail.URL} alt="" small />
-            <RouteTitle>{route.title}</RouteTitle>
-            <RouteLocation>
-              {route.city}, {route.country}
-            </RouteLocation>
-            <FlexContainer wrap>
-              {route.tags.map(tag => (
-                <Tag key={uuidv4()}>{tag}</Tag>
-              ))}
-            </FlexContainer>
-            <RouteAuthor>Created by {route.author.name}</RouteAuthor>
-          </DiscoverCard>
-        ))
+        routes.map(route => <DiscoverCardWrap key={route._id} route={route} />)
       ) : (
         <h3>No routes found</h3>
       );
