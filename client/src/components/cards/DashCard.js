@@ -7,17 +7,22 @@ const side = '200px';
 const DashCard = styled.div`
   height: ${side};
   width: ${side};
-  background: ${colors.bgColorDark};
+  /* background: ${colors.bgColorDark}; */
+  box-sizing: border-box;
+  border: 3px solid white;
+  color: white;
+  font-size: ${fonts.fsH4};
+  text-decoration: none;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${colors.secondary};
-  font-size: ${fonts.fsH4};
-  text-decoration: none;
-  transition: all 300ms ease-in-out;
+
+  transition: all 250ms ease-in-out;
 
   &:hover {
     background: black;
+    border: 3px solid black;
     color: ${colors.primary};
   }
 `;

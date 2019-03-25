@@ -63,7 +63,7 @@ class Register extends Component {
       <Grid areas={'"image content content"'}>
         <GridImage img={process.env.PUBLIC_URL + '/roadsign.jpg'} />
         <GridContent>
-          <Card>
+          <Card top="40px">
             <CardContent>
               <CardTitle>Sign Up</CardTitle>
               <form onSubmit={this.handleSubmit}>

@@ -15,7 +15,7 @@ function Landing() {
         <SubTagline>Create and discover your own routes</SubTagline>
       </GridImage>
       <GridContent>
-        <Card width="240px" top="150px">
+        <Card width="200px" top="150px">
           <NavList>
             <NavItem as={Link} to="/register">
               Sign Up

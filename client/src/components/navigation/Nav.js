@@ -18,8 +18,10 @@ export const NavItem = styled.li`
   font-size: ${fonts.fsH3};
   text-decoration: none;
   color: inherit;
+  /* transition: transform 200ms ease-in-out; */
 
   &:hover {
     color: ${colors.primary};
+    /* transform: translateX(5px); */
   }
 `;

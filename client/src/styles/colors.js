@@ -5,7 +5,8 @@ const colors = {
   primary: '#91ED8F',
   secondary: '#79A5CE',
   link: '#2D9BD9',
-  error: '#EB5D5D'
+  error: '#EB5D5D',
+  boxShadow: 'lightgrey'
 };
 
 export default colors;

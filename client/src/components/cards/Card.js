@@ -16,7 +16,7 @@ export const Card = styled.div`
   align-items: center;
 
   margin: auto;
-  border-radius: 15px;
+  border-radius: 20px;
   background-color: ${colors.bgColorDark};
 
   opacity: ${props => (props.transparent ? '0.8' : '1')};
