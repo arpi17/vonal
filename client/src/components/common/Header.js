@@ -27,9 +27,9 @@ class Header extends Component {
 
     return (
       <StyledHeader>
-        <Link to="/">
-          <LogoText>Vonal</LogoText>
-        </Link>
+        <LogoText as={Link} to={'/'}>
+          Vonal
+        </LogoText>
         {headerActions}
       </StyledHeader>
     );

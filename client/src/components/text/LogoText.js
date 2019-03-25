@@ -3,6 +3,8 @@ import fonts from '../../styles/fonts';
 
 const LogoText = styled.div`
   font-size: ${fonts.fsH3};
+  color: inherit;
+  text-decoration: none;
 `;
 
 export default LogoText;
