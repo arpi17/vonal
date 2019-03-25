@@ -23,6 +23,19 @@ export const createRoute = (route, history) => dispatch => {
     });
 };
 
+// Update route
+export const updateRoute = (id, route, history) => dispatch => {
+  axios
+    .put(`routes/${id}`, route)
+    .then(res => history.push('/dashboard'))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        errors: err.response.data
+      });
+    });
+};
+
 // FIXME: request is sent even when the filter did not change
 
 // Get the routes based on the filter
@@ -74,9 +87,9 @@ export const getCurrentRoute = (id, cachedRoutes = []) => dispatch => {
 };
 
 // Get own routes
-export const getMyRoutes = userID => dispatch => {
+export const getMyRoutes = () => dispatch => {
   axios
-    .get(`users/myroutes/${userID}`)
+    .get('users/myroutes')
     .then(res => {
       dispatch({
         type: GET_ROUTES,

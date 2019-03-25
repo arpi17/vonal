@@ -79,24 +79,19 @@ router.post('/login', validateLogin, (req, res) => {
   });
 });
 
-// @route   GET /users/myroutes/:id
+// @route   GET /users/myroutes
 // @desc    Get routes created by the current user
 // @access  Private
 router.get(
-  '/myroutes/:id',
+  '/myroutes',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    // Only let users get their own routes
-    if (req.user.id === req.params.id) {
-      User.findById(req.params.id)
-        .populate('routes')
-        .then(user => {
-          res.json(user.routes);
-        })
-        .catch(err => console.log(err));
-    } else {
-      return res.status(403).json({ unauthorized: 'Unauthorized request' });
-    }
+    User.findById(req.user.id)
+      .populate('routes')
+      .then(user => {
+        res.json(user.routes);
+      })
+      .catch(err => console.log(err));
   }
 );
 

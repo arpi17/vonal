@@ -17,7 +17,6 @@ export class MyRoutes extends Component {
     getMyRoutes: PropTypes.func.isRequired,
     deleteRoute: PropTypes.func.isRequired,
     clearRoutes: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
     routes: PropTypes.object
   };
 
@@ -32,8 +31,7 @@ export class MyRoutes extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.auth.user;
-    this.props.getMyRoutes(id);
+    this.props.getMyRoutes();
   }
 
   componentWillUnmount() {
@@ -48,7 +46,7 @@ export class MyRoutes extends Component {
     const { routes } = this.props.routes;
     const routesFeed =
       routes.length > 0 ? (
-        this.props.routes.routes.map(route => (
+        routes.map(route => (
           <RouteCardWrap
             key={route._id}
             route={route}
@@ -75,7 +73,6 @@ export class MyRoutes extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
   routes: state.routes
 });
 
