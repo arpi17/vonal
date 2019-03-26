@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import visuals from '../../styles/visuals';
-import ThumbnailButtonsContainer from '../layout/ThumbnailOverlay';
+import ThumbnailOverlay from '../layout/ThumbnailOverlay';
 
 const RouteCard = styled.div`
   position: relative;
@@ -10,7 +10,7 @@ const RouteCard = styled.div`
   margin: 15px 15px;
   box-shadow: ${visuals.boxShadow};
 
-  &:hover ${ThumbnailButtonsContainer} {
+  &:hover ${ThumbnailOverlay} {
     display: flex;
   }
 `;

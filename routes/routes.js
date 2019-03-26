@@ -14,7 +14,7 @@ const validateRoute = require('../validation/route');
 // @query   country=country_name&city=city_name&type=type_name
 // @access  Public
 router.get('/', (req, res) => {
-  req.errors = {};
+  // req.errors = {};
   const routeQuery = {};
   const queryFields = ['country', 'city', 'type'];
   for (field of queryFields) {

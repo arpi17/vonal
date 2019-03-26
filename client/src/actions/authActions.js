@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode';
 import { GET_ERRORS, SET_CURRENT_USER } from './actionTypes';
 
 import setAuthToken from '../utils/setAuthToken';
+import { getSavedRoutes } from './savedActions';
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
@@ -26,6 +27,7 @@ export const loginUser = userData => dispatch => {
       const { token } = res.data;
       localStorage.setItem('authToken', token);
       setAuthToken(token);
+      dispatch(getSavedRoutes());
       dispatch(setCurrentUser(jwt_decode(token)));
     })
     .catch(err => {

@@ -28,6 +28,7 @@ import Header from './components/common/Header';
 // Redux
 import store from './store';
 import { setCurrentUser, logoutUser } from './actions/authActions';
+import { getSavedRoutes } from './actions/savedActions';
 
 // Utils
 import setAuthToken from './utils/setAuthToken';
@@ -40,6 +41,9 @@ if (token) {
   setAuthToken(token);
   const decoded = jwt_decode(token);
   store.dispatch(setCurrentUser(decoded));
+
+  // Get saved routes
+  store.dispatch(getSavedRoutes());
 
   // Check for expiration
   const currentTime = Date.now() / 1000;

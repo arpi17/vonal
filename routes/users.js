@@ -87,7 +87,7 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     User.findById(req.user.id)
-      .populate('routes')
+      .populate({ path: 'routes', options: { sort: { date: -1 } } })
       .then(user => {
         res.json(user.routes);
       })
@@ -97,25 +97,36 @@ router.get(
 
 // @route   GET /users/saved
 // @desc    Get saved routes
+// @query   ?list=true - if true returns only the array of saved routes' ids
 // @access  Private
 router.get(
   '/saved',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    User.findById(req.user.id)
-      .populate({ path: 'saved', populate: { path: 'author' } })
-      .then(user => {
-        // Check if route still exists
-        user.saved = user.saved.filter(route => Route.findById(route._id));
-        // FIXME: removed route still persists in db
-        user.save().then(user => {
+    // If list query is true return only the list
+    if (req.query.list) {
+      User.findById(req.user.id)
+        .then(user => {
           res.json(user.saved);
-        });
-      })
-      .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+    } else {
+      User.findById(req.user.id)
+        .populate({ path: 'saved', populate: { path: 'author' } })
+        .then(user => {
+          // Check if route still exists
+          user.saved = user.saved.filter(route => Route.findById(route._id));
+          // FIXME: removed route still persists in db
+          user.save().then(user => {
+            res.json(user.saved);
+          });
+        })
+        .catch(err => console.log(err));
+    }
   }
 );
 
+// FIXME: Add validators to check if route is already saved
 // @route   PUT /users/saved/:id
 // @desc    Save a route to collection
 // @access  Private

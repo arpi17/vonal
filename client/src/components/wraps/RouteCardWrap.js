@@ -25,17 +25,6 @@ function RouteCardWrap({ route, onDeleteClick }) {
         >
           <Button>Edit</Button>
         </StyledLink>
-        {/* <Button
-          as={Link}
-          to={{
-            pathname: '/create',
-            state: {
-              route: route
-            }
-          }}
-        >
-          Edit
-        </Button> */}
       </ThumbnailOverlay>
       <RouteTitle>{route.title}</RouteTitle>
       <RouteLocation>

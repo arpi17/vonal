@@ -4,8 +4,10 @@ import sizes from '../../styles/sizes';
 const ThumbnailOverlay = styled.div`
   position: absolute;
   top: 0;
-  height: ${sizes.thumbnailSide};
-  width: ${sizes.thumbnailSide};
+  height: ${props =>
+    props.small ? sizes.thumbnailSideSmall : sizes.thumbnailSide};
+  width: ${props =>
+    props.small ? sizes.thumbnailSideSmall : sizes.thumbnailSide};
   background-color: rgba(20, 20, 20, 0.75);
 
   display: none;

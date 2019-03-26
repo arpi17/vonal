@@ -13,10 +13,6 @@ import DiscoverFeed from '../components/layout/DiscoverFeed';
 import DiscoverCardWrap from '../components/wraps/DiscoverCardWrap';
 import Loader from '../components/loaders/Loader';
 
-// utils
-// import compareRoutes from '../utils/compareRoutes';
-// TODO: Don't rerender if the routes did not change
-
 class Discover extends Component {
   static propTypes = {
     getRoutes: PropTypes.func.isRequired,
@@ -47,8 +43,6 @@ class Discover extends Component {
   }
 
   componentWillUnmount() {
-    // TODO: !!Decide if you need this!!
-    // this.props.clearRoutes();
     this.props.setFilter({
       country: '',
       city: '',

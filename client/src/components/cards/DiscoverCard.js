@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 import visuals from '../../styles/visuals';
+import ThumbnailOverlay from '../layout/ThumbnailOverlay';
 
 const DiscoverCard = styled.div`
   height: 65vh;
-  /* border: 1px solid black; */
+  width: 250px;
   box-shadow: ${visuals.boxShadow};
   margin: 0 15px;
   position: relative;
-  color: inherit;
-  text-decoration: none;
 
   &:first-child {
     margin-left: 0;
+  }
+
+  &:hover ${ThumbnailOverlay} {
+    display: flex;
   }
 `;
 
