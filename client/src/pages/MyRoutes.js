@@ -11,6 +11,7 @@ import RouteCardContainer from '../components/layout/RouteCardContainer';
 import RouteCardWrap from '../components/wraps/RouteCardWrap';
 import RedirectText from '../components/text/RedirectText';
 import LinkText from '../components/text/LinkText';
+import Loader from '../components/loaders/Loader';
 
 export class MyRoutes extends Component {
   static propTypes = {
@@ -22,11 +23,6 @@ export class MyRoutes extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      isLoading: true
-    };
-
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
   }
 
@@ -43,25 +39,26 @@ export class MyRoutes extends Component {
   }
 
   render() {
-    const { routes } = this.props.routes;
-    const routesFeed =
-      routes.length > 0 ? (
-        routes.map(route => (
-          <RouteCardWrap
-            key={route._id}
-            route={route}
-            onDeleteClick={this.handleDeleteClick}
-          />
-        ))
-      ) : (
-        <RedirectText>
-          You have not created a route yet. Click{' '}
-          <LinkText as={Link} to={'/create'}>
-            here
-          </LinkText>{' '}
-          to create one
-        </RedirectText>
-      );
+    const { routes, loading } = this.props.routes;
+    const routesFeed = loading ? (
+      <Loader />
+    ) : routes.length > 0 ? (
+      routes.map(route => (
+        <RouteCardWrap
+          key={route._id}
+          route={route}
+          onDeleteClick={this.handleDeleteClick}
+        />
+      ))
+    ) : (
+      <RedirectText>
+        You have not created a route yet. Click{' '}
+        <LinkText as={Link} to={'/create'}>
+          here
+        </LinkText>{' '}
+        to create one
+      </RedirectText>
+    );
 
     return (
       <RoutesMain>

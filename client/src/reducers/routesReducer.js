@@ -4,7 +4,8 @@ import {
   DELETE_ROUTE,
   CLEAR_ROUTE,
   CLEAR_ROUTES,
-  SET_FILTER
+  SET_FILTER,
+  IS_LOADING
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
     country: '',
     city: '',
     type: ''
-  }
+  },
+  loading: false
 };
 
 export default function(state = initialState, action) {
@@ -22,12 +24,14 @@ export default function(state = initialState, action) {
     case GET_ROUTES:
       return {
         ...state,
-        routes: action.routes
+        routes: action.routes,
+        loading: false
       };
     case GET_CURRENT_ROUTE:
       return {
         ...state,
-        route: action.route
+        route: action.route,
+        loading: false
       };
     case DELETE_ROUTE:
       return {
@@ -48,6 +52,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         filter: action.filter
+      };
+    case IS_LOADING:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;

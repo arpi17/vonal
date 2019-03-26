@@ -11,20 +11,13 @@ import DiscoverCardWrap from '../components/wraps/DiscoverCardWrap';
 import DiscoverFeed from '../components/layout/DiscoverFeed';
 import RedirectText from '../components/text/RedirectText';
 import LinkText from '../components/text/LinkText';
+import Loader from '../components/loaders/Loader';
 
 export class SavedRoutes extends Component {
   static propTypes = {
     routes: PropTypes.object,
     getSavedRoutes: PropTypes.func.isRequired
   };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: true
-    };
-  }
 
   componentDidMount() {
     this.props.getSavedRoutes();
@@ -38,11 +31,9 @@ export class SavedRoutes extends Component {
   }
 
   render() {
-    const { isLoading } = this.state;
-    const { routes } = this.props.routes;
-    // FIXME: Loading animation not working properly (maybe add IS_LOADING to redux state)
-    const routesFeed = isLoading ? (
-      <h4>Loading...</h4>
+    const { routes, loading } = this.props.routes;
+    const routesFeed = loading ? (
+      <Loader />
     ) : routes.length > 0 ? (
       routes.map(route => <DiscoverCardWrap route={route} key={route._id} />)
     ) : (

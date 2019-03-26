@@ -7,3 +7,4 @@ export const DELETE_ROUTE = 'DELETE_ROUTE';
 export const CLEAR_ROUTE = 'CLEAR_ROUTE';
 export const CLEAR_ROUTES = 'CLEAR_ROUTES';
 export const SET_FILTER = 'SET_FILTER';
+export const IS_LOADING = 'IS_LOADING';

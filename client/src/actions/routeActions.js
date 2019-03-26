@@ -7,7 +7,8 @@ import {
   DELETE_ROUTE,
   SET_FILTER,
   CLEAR_ROUTE,
-  CLEAR_ROUTES
+  CLEAR_ROUTES,
+  IS_LOADING
 } from './actionTypes';
 
 // Create a route
@@ -54,6 +55,7 @@ export const getRoutes = filter => dispatch => {
   // Remove the last '&' or '?'
   url = url.slice(0, url.length - 1);
 
+  dispatch(startLoading());
   axios
     .get(url)
     .then(res => {
@@ -74,6 +76,7 @@ export const getCurrentRoute = (id, cachedRoutes = []) => dispatch => {
       route
     });
   } else {
+    dispatch(startLoading());
     axios
       .get(`/routes/${id}`)
       .then(res => {
@@ -88,6 +91,7 @@ export const getCurrentRoute = (id, cachedRoutes = []) => dispatch => {
 
 // Get own routes
 export const getMyRoutes = () => dispatch => {
+  dispatch(startLoading());
   axios
     .get('users/myroutes')
     .then(res => {
@@ -101,6 +105,7 @@ export const getMyRoutes = () => dispatch => {
 
 // Get saved routes
 export const getSavedRoutes = () => dispatch => {
+  dispatch(startLoading());
   axios
     .get('users/saved')
     .then(res => {
@@ -145,5 +150,12 @@ export const setFilter = filter => {
   return {
     type: SET_FILTER,
     filter
+  };
+};
+
+// Start request - start loading animation
+export const startLoading = () => {
+  return {
+    type: IS_LOADING
   };
 };

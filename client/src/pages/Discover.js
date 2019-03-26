@@ -11,6 +11,7 @@ import FilterArea from '../components/layout/FilterArea';
 import Filter from '../components/user-input/Filter';
 import DiscoverFeed from '../components/layout/DiscoverFeed';
 import DiscoverCardWrap from '../components/wraps/DiscoverCardWrap';
+import Loader from '../components/loaders/Loader';
 
 // utils
 // import compareRoutes from '../utils/compareRoutes';
@@ -36,7 +37,8 @@ class Discover extends Component {
     this.state = {
       country: '',
       city: '',
-      type: ''
+      type: '',
+      isInitialised: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -76,15 +78,22 @@ class Discover extends Component {
   }
 
   render() {
-    const { country, city, type } = this.state;
-    const { routes } = this.props.routes;
+    const { country, city, type, isInitialised } = this.state;
+    const { routes, loading } = this.props.routes;
 
-    const routesFeed =
-      routes.length > 0 ? (
-        routes.map(route => <DiscoverCardWrap key={route._id} route={route} />)
-      ) : (
-        <h3>No routes found</h3>
-      );
+    const routesFeed = loading ? (
+      <Loader />
+    ) : routes.length > 0 ? (
+      routes.map(route => <DiscoverCardWrap key={route._id} route={route} />)
+    ) : isInitialised ? (
+      <h3>No routes found</h3>
+    ) : (
+      <h3>
+        Discover routes by adjusting the filter and clicking the button on the
+        left
+      </h3>
+    );
+
     return (
       <RoutesMain>
         <SectionTitle>Discover Routes</SectionTitle>
