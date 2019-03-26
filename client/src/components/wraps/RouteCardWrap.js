@@ -5,6 +5,7 @@ import RouteCard from '../cards/RouteCard';
 import Thumbnail from '../map/Thumbnail';
 import ThumbnailOverlay from '../layout/ThumbnailOverlay';
 import Button from '../buttons/Button';
+import StyledLink from '../navigation/StyledLink';
 import RouteTitle from '../text/RouteTitle';
 import RouteLocation from '../text/RouteLocation';
 
@@ -14,7 +15,27 @@ function RouteCardWrap({ route, onDeleteClick }) {
       <Thumbnail src={route.thumbnail.URL} />
       <ThumbnailOverlay>
         <Button onClick={() => onDeleteClick(route._id)}>Delete</Button>
-        <Button>Edit</Button>
+        <StyledLink
+          to={{
+            pathname: '/create',
+            state: {
+              route: route
+            }
+          }}
+        >
+          <Button>Edit</Button>
+        </StyledLink>
+        {/* <Button
+          as={Link}
+          to={{
+            pathname: '/create',
+            state: {
+              route: route
+            }
+          }}
+        >
+          Edit
+        </Button> */}
       </ThumbnailOverlay>
       <RouteTitle>{route.title}</RouteTitle>
       <RouteLocation>

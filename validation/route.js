@@ -16,7 +16,7 @@ module.exports = function(req, res, next) {
     req.errors.title = 'Title field is required';
   }
   // Description (if provided)
-  if (description && !validator.isLength(description, { min: 10, max: 500 })) {
+  if (description && !validator.isLength(description, { min: 8, max: 300 })) {
     req.errors.description =
       'Description (if provided) must be between 10 and 500 characters';
   }

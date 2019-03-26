@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 
-// TODO: Correct styling
 const Input = styled.input`
   width: ${props => (props.width ? props.width : '300px')};
   height: 40px;

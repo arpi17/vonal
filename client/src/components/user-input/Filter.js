@@ -53,7 +53,7 @@ function Filter({ country, city, type, onChange, onBlur, onClick }) {
           onBlur={onBlur}
         />
       </RadioButtonArea>
-      <Button onClick={onClick} type="button" primary>
+      <Button onClick={onClick} type="button" primary centered>
         Get Routes
       </Button>
     </form>

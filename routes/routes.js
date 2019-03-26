@@ -87,6 +87,7 @@ router.post(
 router.put(
   '/:id',
   passport.authenticate('jwt', { session: false }),
+  validateRoute,
   (req, res) => {
     Route.findById(req.params.id).then(route => {
       if (route.author.toString() === req.user.id) {

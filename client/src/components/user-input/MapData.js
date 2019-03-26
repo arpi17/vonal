@@ -11,8 +11,6 @@ import FlexContainer from '../layout/FlexContainer';
 import TagArea from '../layout/TagArea';
 import Tag from '../cards/Tag';
 
-// TODO: Add tag on enter press
-
 function MapData({
   title,
   description,
@@ -25,8 +23,10 @@ function MapData({
   addTagClick,
   deleteTagClick,
   onKeyDown,
-  createRouteClick
+  sendRouteClick,
+  _id
 }) {
+  const buttonText = _id ? 'Update route' : 'Create route';
   return (
     <FormContainer>
       <form>
@@ -74,7 +74,7 @@ function MapData({
             onKeyDown={onKeyDown}
             withButton={true}
           />
-          <FlexContainer wrap>
+          <FlexContainer wrap="true">
             {tags.map(tag => (
               <Tag key={uuidv4()}>
                 {tag}{' '}
@@ -86,8 +86,13 @@ function MapData({
           </FlexContainer>
         </TagArea>
       </form>
-      <Button onClick={createRouteClick} disabled={coords.length === 0} primary>
-        Create route
+      <Button
+        onClick={sendRouteClick}
+        disabled={coords.length === 0}
+        primary
+        centered
+      >
+        {buttonText}
       </Button>
     </FormContainer>
   );

@@ -19,7 +19,7 @@ function DiscoverCardWrap({ route }) {
       <RouteLocation>
         {route.city}, {route.country}
       </RouteLocation>
-      <FlexContainer wrap>
+      <FlexContainer wrap="true">
         {route.tags.map(tag => (
           <Tag key={uuidv4()}>{tag}</Tag>
         ))}

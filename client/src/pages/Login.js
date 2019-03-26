@@ -88,7 +88,7 @@ class Login extends Component {
                   onChange={this.handleChange}
                   error={errors.password}
                 />
-                <Button>Enter</Button>
+                <Button centered>Enter</Button>
               </form>
               <CardText>
                 Don't have an account yet? Sign up{' '}

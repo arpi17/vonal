@@ -99,7 +99,9 @@ class Register extends Component {
                   onChange={this.handleChange}
                   error={errors.password2}
                 />
-                <Button primary>Register</Button>
+                <Button primary centered>
+                  Register
+                </Button>
                 <CardText>
                   Already have an account? Log in{' '}
                   <LinkText as={Link} to="/login">

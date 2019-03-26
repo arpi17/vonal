@@ -27,7 +27,7 @@ export const createRoute = (route, history) => dispatch => {
 export const updateRoute = (id, route, history) => dispatch => {
   axios
     .put(`routes/${id}`, route)
-    .then(res => history.push('/dashboard'))
+    .then(res => history.push('/my-routes'))
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
