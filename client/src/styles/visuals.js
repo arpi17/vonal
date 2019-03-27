@@ -1,7 +1,7 @@
 import colors from './colors';
 
 const visuals = {
-  boxShadow: `10px 2px 5px ${colors.boxShadow}`
+  boxShadow: `11px 4px 8px ${colors.boxShadow}`
 };
 
 export default visuals;

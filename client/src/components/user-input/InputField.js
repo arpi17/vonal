@@ -43,7 +43,7 @@ function InputField(props) {
       {withButton && (
         <InputButtonContainer>
           <InputButton onClick={onClick} type="button">
-            &#43;
+            {/* &#43; */}+
           </InputButton>
         </InputButtonContainer>
       )}

@@ -14,7 +14,8 @@ class SearchBar extends Component {
       const { map, accessToken } = this.props;
       if (!isEmpty(map)) {
         const geocoder = new MapboxGeocoder({
-          accessToken
+          accessToken,
+          placeholder: 'Search Location'
         });
         this.geocoderRef.current.appendChild(geocoder.onAdd(map));
       }
@@ -22,7 +23,13 @@ class SearchBar extends Component {
   }
 
   render() {
-    return <div className="search-bar" ref={this.geocoderRef} />;
+    return (
+      <div
+        style={{ margin: '10px auto 20px auto' }}
+        className="search-bar"
+        ref={this.geocoderRef}
+      />
+    );
   }
 }
 

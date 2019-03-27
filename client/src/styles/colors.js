@@ -6,6 +6,7 @@ const colors = {
   secondary: '#FF7B1B',
   link: '#2D9BD9',
   error: '#EB5D5D',
+  cardColor: 'rgba(145,237,143,0.1)',
   boxShadow: 'lightgrey'
 };
 

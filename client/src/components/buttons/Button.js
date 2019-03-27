@@ -18,6 +18,10 @@ const Button = styled.button`
   color: black;
   cursor: pointer;
   font-size: 14px;
+
+  &:disabled {
+    opacity: 0.3;
+  }
 `;
 
 export default Button;

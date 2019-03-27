@@ -10,6 +10,7 @@ import Button from '../buttons/Button';
 import FlexContainer from '../layout/FlexContainer';
 import TagArea from '../layout/TagArea';
 import Tag from '../cards/Tag';
+import TagDeleteButton from '../buttons/TagDeleteButton';
 
 function MapData({
   title,
@@ -78,9 +79,12 @@ function MapData({
             {tags.map(tag => (
               <Tag key={uuidv4()}>
                 {tag}{' '}
-                <button type="button" onClick={() => deleteTagClick(tag)}>
+                <TagDeleteButton
+                  type="button"
+                  onClick={() => deleteTagClick(tag)}
+                >
                   &times;
-                </button>
+                </TagDeleteButton>
               </Tag>
             ))}
           </FlexContainer>

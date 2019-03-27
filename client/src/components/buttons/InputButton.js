@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 const InputButton = styled.button`
-  height: 20px;
-  width: 20px;
-  padding: 3px;
+  /* height: 40px; */
+  width: 30px;
+  padding: 4px 8px;
   border-radius: 50%;
+  cursor: pointer;
 `;
 
 export default InputButton;

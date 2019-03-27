@@ -26,5 +26,5 @@ export const GridImage = styled.div`
 export const GridContent = styled.div`
   grid-area: content;
   position: relative;
-  background-color: ${colors.bgColor};
+  background-color: ${props => props.background || colors.bgColor};
 `;

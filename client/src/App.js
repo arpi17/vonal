@@ -20,6 +20,7 @@ import CurrentRoute from './pages/CurrentRoute';
 import Discover from './pages/Discover';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import NotFound from './pages/NotFound';
 
 // Components
 import PrivateRoute from './components/common/PrivateRoute';
@@ -59,38 +60,33 @@ class App extends Component {
         <Router>
           <React.Fragment>
             <Header />
-            <Route
-              exact
-              path="/"
-              render={() =>
-                store.getState().auth.isAuthenticated ? (
-                  <Redirect to="/dashboard" />
-                ) : (
-                  <Landing />
-                )
-              }
-            />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/discover" component={Discover} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/contact" component={Contact} />
-            <Route exact path="/routes/:id" component={CurrentRoute} />
             <Switch>
+              <Route
+                exact
+                path="/"
+                render={() =>
+                  store.getState().auth.isAuthenticated ? (
+                    <Redirect to="/dashboard" />
+                  ) : (
+                    <Landing />
+                  )
+                }
+              />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/discover" component={Discover} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/contact" component={Contact} />
+              <Route exact path="/routes/:id" component={CurrentRoute} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            </Switch>
-            <Switch>
               <PrivateRoute exact path="/create" component={CreateRoute} />
-            </Switch>
-            <Switch>
               <PrivateRoute exact path="/my-routes" component={MyRoutes} />
-            </Switch>
-            <Switch>
               <PrivateRoute
                 exact
                 path="/saved-routes"
                 component={SavedRoutes}
               />
+              <Route component={NotFound} />
             </Switch>
           </React.Fragment>
         </Router>
