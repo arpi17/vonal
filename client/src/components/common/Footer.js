@@ -1,13 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import StyledFooter from './StyledFooter';
+import HeaderLinkContainer from '../layout/HeaderLinkContainer';
+import StyledLink from '../navigation/StyledLink';
 
 function Footer() {
   return (
     <StyledFooter>
-      <span>Copyright &copy;</span> <Link to="/about">About</Link>{' '}
-      <Link to="/contact">Contact</Link>
+      <HeaderLinkContainer width="300px">
+        <span>Copyright &copy;</span> <StyledLink to="/about">About</StyledLink>{' '}
+        <StyledLink to="/contact">Contact</StyledLink>
+      </HeaderLinkContainer>
     </StyledFooter>
   );
 }

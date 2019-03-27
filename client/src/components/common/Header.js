@@ -9,20 +9,25 @@ import { logoutUser } from '../../actions/authActions';
 import StyledHeader from './StyledHeader';
 import UsernameText from '../text/UsernameText';
 import LogoText from '../text/LogoText';
-
+import StyledLink from '../navigation/StyledLink';
+import HeaderLinkContainer from '../layout/HeaderLinkContainer';
 class Header extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
 
     const headerActions = isAuthenticated ? (
-      <div>
-        <UsernameText>{this.props.auth.user.name}</UsernameText>
-        <Link to="/" onClick={this.props.logoutUser}>
+      <HeaderLinkContainer>
+        <StyledLink to="/dashboard">Dashboard</StyledLink>
+        <StyledLink to="/" onClick={this.props.logoutUser}>
           Sign out
-        </Link>
-      </div>
+        </StyledLink>
+        <UsernameText>{this.props.auth.user.name}</UsernameText>
+      </HeaderLinkContainer>
     ) : (
-      <Link to="/login">Login</Link>
+      <HeaderLinkContainer>
+        <StyledLink to="/register">Register</StyledLink>
+        <StyledLink to="/login">Login</StyledLink>
+      </HeaderLinkContainer>
     );
 
     return (

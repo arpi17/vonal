@@ -21,8 +21,8 @@ const DashCard = styled.div`
   transition: all 250ms ease-in-out;
 
   &:hover {
-    background: black;
-    border: 3px solid black;
+    background: ${colors.bgColorDark};
+    border: 3px solid ${colors.bgColorDark};
     color: ${colors.primary};
   }
 `;

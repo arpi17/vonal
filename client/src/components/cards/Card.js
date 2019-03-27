@@ -18,6 +18,7 @@ export const Card = styled.div`
   margin: auto;
   border-radius: 20px;
   background-color: ${colors.bgColorDark};
+  color: #efefef;
 
   opacity: ${props => (props.transparent ? '0.8' : '1')};
 `;
@@ -33,6 +34,7 @@ export const CardContent = styled.div`
 export const CardTitle = styled.h3`
   margin-bottom: 20px;
   font-size: ${fonts.fsH3};
+  color: ${colors.primary};
 `;
 
 export const CardText = styled.p`

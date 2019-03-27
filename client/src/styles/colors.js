@@ -1,8 +1,9 @@
 const colors = {
   bgColor: '#FBFBFB',
-  bgColorDark: '#C4C4C4',
+  bgColorDark: '#2A2A2A',
   overlay: 'rgba(40,32,13,0.4)',
-  primary: '#91ED8F',
+  // primary: '#ECD821',
+  primary: '#25D16A',
   secondary: '#79A5CE',
   link: '#2D9BD9',
   error: '#EB5D5D',

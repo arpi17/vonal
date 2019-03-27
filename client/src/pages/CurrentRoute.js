@@ -115,7 +115,12 @@ export class CurrentRoute extends Component {
     return (
       <RoutesMain>
         {title}
-        <Map ref={el => (this.mapContainer = el)} height="480px" centered />
+        <Map
+          ref={el => (this.mapContainer = el)}
+          height="480px"
+          maxwidth="80%"
+          centered
+        />
         <FlexContainer maxwidth={sizes.currentRouteMaxwidth}>
           {!isEmpty(route) &&
             route.tags.map((tag, i) => <Tag key={i}>{tag}</Tag>)}

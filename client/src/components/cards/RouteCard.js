@@ -4,7 +4,7 @@ import ThumbnailOverlay from '../layout/ThumbnailOverlay';
 
 const RouteCard = styled.div`
   position: relative;
-  height: 380px;
+  height: 400px;
   width: 300px;
   /* flex: 0 1 25%; */
   margin: 15px 15px;
