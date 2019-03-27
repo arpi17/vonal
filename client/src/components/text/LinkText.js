@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import colors from '../../styles/colors';
 
 const LinkText = styled.span`
-  color: ${colors.link};
+  color: ${colors.secondary};
   text-decoration: none;
 `;
 

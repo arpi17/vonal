@@ -9,8 +9,8 @@ const DashCard = styled.div`
   width: ${side};
   /* background: ${colors.bgColorDark}; */
   box-sizing: border-box;
-  border: 3px solid white;
-  color: white;
+  border: 3px solid ${colors.bgColor};
+  color: ${colors.bgColor};
   font-size: ${fonts.fsH4};
   text-decoration: none;
 
@@ -22,7 +22,7 @@ const DashCard = styled.div`
 
   &:hover {
     background: ${colors.bgColorDark};
-    border: 3px solid ${colors.bgColorDark};
+    border: 3px solid ${colors.secondary};
     color: ${colors.primary};
   }
 `;

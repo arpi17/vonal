@@ -6,7 +6,7 @@ const LogoText = styled.div`
   font-size: ${fonts.fsH3};
   color: inherit;
   text-decoration: none;
-  color: ${colors.primary};
+  color: ${colors.secondary};
 `;
 
 export default LogoText;

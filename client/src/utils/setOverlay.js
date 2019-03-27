@@ -1,5 +1,6 @@
 const lineColor = '%233B9DDD';
-const markerColor = '%2391ED8F';
+const markerColor = '%23FF7B1B';
+// Marker is of secondary color
 
 const setOverlay = (geometry, coords) => {
   const overlay = {

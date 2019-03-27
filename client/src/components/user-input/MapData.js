@@ -91,6 +91,7 @@ function MapData({
         disabled={coords.length === 0}
         primary
         centered
+        auto
       >
         {buttonText}
       </Button>

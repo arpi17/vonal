@@ -14,7 +14,9 @@ function RouteCardWrap({ route, onDeleteClick }) {
     <RouteCard key={route._id}>
       <Thumbnail src={route.thumbnail.URL} />
       <ThumbnailOverlay>
-        <Button onClick={() => onDeleteClick(route._id)}>Delete</Button>
+        <Button onClick={() => onDeleteClick(route._id)} danger>
+          Delete
+        </Button>
         <StyledLink
           to={{
             pathname: '/create',

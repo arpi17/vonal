@@ -21,7 +21,7 @@ export const NavItem = styled.li`
   /* transition: transform 200ms ease-in-out; */
 
   &:hover {
-    color: ${colors.primary};
+    color: ${colors.secondary};
     /* transform: translateX(5px); */
   }
 `;
