@@ -16,7 +16,7 @@ export const getSavedRoutes = () => dispatch => {
 
 export const saveRoute = id => dispatch => {
   axios
-    .put(`users/saved/${id}`)
+    .put(`/users/saved/${id}`)
     .then(res => {
       dispatch({
         type: SAVE_ROUTE,
@@ -28,7 +28,7 @@ export const saveRoute = id => dispatch => {
 
 export const unsaveRoute = id => dispatch => {
   axios
-    .delete(`users/saved/${id}`)
+    .delete(`/users/saved/${id}`)
     .then(res => {
       dispatch({
         type: UNSAVE_ROUTE,

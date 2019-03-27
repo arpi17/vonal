@@ -40,30 +40,29 @@ function DiscoverCardWrap({ route, auth, saved, saveRoute, unsaveRoute }) {
     <Button onClick={handleSaveClick}>Save</Button>
   );
 
-  const viewOrUpdateButton =
-    auth.isAuthenticated && isOwnRoute ? (
-      <StyledLink
-        to={{
-          pathname: '/create',
-          state: {
-            route: route
-          }
-        }}
-      >
-        <Button>Edit</Button>
-      </StyledLink>
-    ) : (
-      <StyledLink to={`routes/${route._id}`}>
-        <Button>View</Button>
-      </StyledLink>
-    );
+  const saveOrUpdateButton = isOwnRoute ? (
+    <StyledLink
+      to={{
+        pathname: '/create',
+        state: {
+          route: route
+        }
+      }}
+    >
+      <Button>Edit</Button>
+    </StyledLink>
+  ) : (
+    saveActionButton
+  );
 
   return (
     <DiscoverCard>
       <Thumbnail src={route.thumbnail.URL} alt="" small />
       <ThumbnailOverlay small>
-        {viewOrUpdateButton}
-        {auth.isAuthenticated && saveActionButton}
+        <StyledLink to={`routes/${route._id}`}>
+          <Button>View</Button>
+        </StyledLink>
+        {auth.isAuthenticated && saveOrUpdateButton}
       </ThumbnailOverlay>
       <RouteTitle>{route.title}</RouteTitle>
       <RouteLocation>

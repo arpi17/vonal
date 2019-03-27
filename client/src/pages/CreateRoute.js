@@ -256,40 +256,12 @@ class CreateRoute extends Component {
   }
 
   drawRoute(e) {
-    const {
-      // map,
-      route: { type }
-    } = this.state;
+    const { type } = this.state.route;
 
     const lastFeature = e.features.length - 1;
     const coords = e.features[lastFeature].geometry.coordinates;
 
     this.setRoute(type, coords);
-
-    // if (coords.length >= 2) {
-    //   const newCoords = coords.join(';');
-    //   const url = `
-    //     https://api.mapbox.com/directions/v5/mapbox/${type}/${newCoords}?geometries=geojson&access_token=${mapboxToken}
-    //   `;
-
-    //   fetch(url)
-    //     .then(res => res.json())
-    //     .then(data => {
-    //       const geometry = data.routes[0].geometry;
-    //       const newLayer = setRouteLayer(geometry);
-
-    //       this.removeRoute();
-    //       map.addLayer(newLayer);
-
-    //       this.setState({
-    //         route: {
-    //           ...this.state.route,
-    //           coords,
-    //           geometry
-    //         }
-    //       });
-    //     });
-    // }
   }
 
   setRoute(type, coords) {
@@ -302,7 +274,6 @@ class CreateRoute extends Component {
       fetch(url)
         .then(res => res.json())
         .then(data => {
-          console.log(data);
           const geometry = data.routes[0].geometry;
           const newLayer = setRouteLayer(geometry);
 
