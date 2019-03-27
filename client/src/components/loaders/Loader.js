@@ -2,9 +2,9 @@ import React from 'react';
 import FlexConteiner from '../layout/FlexContainer';
 import loader from './loader.gif';
 
-function Loader() {
+function Loader({ full }) {
   return (
-    <FlexConteiner centered>
+    <FlexConteiner full={full} centered>
       <img
         src={loader}
         alt="Loading..."

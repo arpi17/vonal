@@ -67,6 +67,7 @@ export const getRoutes = filter => dispatch => {
     .catch(err => console.log(err));
 };
 
+// FIXME: loading not working
 // Get single route
 export const getCurrentRoute = (id, cachedRoutes = []) => dispatch => {
   if (cachedRoutes.length > 0) {
