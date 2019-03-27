@@ -12,11 +12,13 @@ export const Grid = styled.div`
 `;
 export const GridImage = styled.div`
   grid-area: image;
-  background-image: linear-gradient(
+  background-image: ${props =>
+      props.overlay &&
+      `linear-gradient(
       180deg,
       ${colors.overlay} 0%,
       ${colors.overlay} 100%
-    ),
+    ),`}
     url(${props => props.img});
   background-position: center;
   background-size: cover;

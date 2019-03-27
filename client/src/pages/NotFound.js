@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { Grid, GridImage, GridContent } from '../components/layout/Grid';
-import SectionTitle from '../components/text/SectionTitle';
-import SectionSubtitle from '../components/text/SectionSubtitle';
 import {
   Card,
   CardContent,

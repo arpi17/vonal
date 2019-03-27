@@ -11,6 +11,14 @@ const RouteCardContainer = styled.div`
     /* flex: 0 0 25%; */
     width: 330px;
   }
+
+  @media (max-width: 720px) {
+    justify-content: center;
+  }
+
+  @media (min-width: 721px) and (max-width: 1080px) {
+    justify-content: space-around;
+  }
 `;
 
 export default RouteCardContainer;

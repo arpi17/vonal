@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import visuals from '../../styles/visuals';
+import colors from '../../styles/colors';
 import ThumbnailOverlay from '../layout/ThumbnailOverlay';
 
 const DiscoverCard = styled.div`
   height: 65vh;
   width: 250px;
   box-shadow: ${visuals.boxShadow};
+  background-color: ${colors.cardColor};
   margin: 0 15px;
   position: relative;
 

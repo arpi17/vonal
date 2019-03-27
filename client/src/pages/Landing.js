@@ -10,7 +10,7 @@ import { NavList, NavItem } from '../components/navigation/Nav';
 function Landing() {
   return (
     <Grid areas={'"image image content"'}>
-      <GridImage img={process.env.PUBLIC_URL + '/landing.jpg'}>
+      <GridImage img={process.env.PUBLIC_URL + '/landing.jpg'} overlay>
         <MainTagline>Vonal</MainTagline>
         <SubTagline>Create and discover your own routes</SubTagline>
       </GridImage>
