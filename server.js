@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const passport = require('passport');
 const path = require('path');
 
@@ -20,8 +20,12 @@ require('./config/passport')(passport);
 // Application-level middleware
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ limit: '1mb', extended: false }));
-app.use(morgan('tiny'));
 app.use(passport.initialize());
+
+if (process.env.NODE_ENV !== 'production') {
+  const morgan = require('morgan');
+  app.use(morgan('tiny'));
+}
 
 // Router-level middelware
 app.use('/users', require('./routes/users'));
