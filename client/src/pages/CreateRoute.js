@@ -27,7 +27,10 @@ import setOverlay from '../utils/setOverlay';
 import getBoundingCoords from '../utils/getBoundingCoords';
 
 // Set Mapbox Access Token
-const mapboxToken = require('../config/accessToken').mapboxToken;
+const mapboxToken =
+  process.env.NODE_ENV === 'production'
+    ? process.env.MAPBOX_TOKEN
+    : require('../config/accessToken').mapboxToken;
 mapboxgl.accessToken = mapboxToken;
 
 class CreateRoute extends Component {
@@ -170,11 +173,6 @@ class CreateRoute extends Component {
     if (coords && prevState.route.type !== this.state.route.type) {
       this.setRoute(this.state.route.type, this.state.route.coords);
     }
-  }
-
-  componentWillUnmount() {
-    // IDEA: Save map to localeStorage
-    this.state.map.remove();
   }
 
   handleDataChange(e) {

@@ -37,6 +37,9 @@ import setAuthToken from './utils/setAuthToken';
 // Styles
 import './App.css';
 
+// TODO: REMOVE THIS
+console.log('mapbox token: ' + process.env.MAPBOX_TOKEN);
+
 const token = localStorage['authToken'];
 if (token) {
   setAuthToken(token);
