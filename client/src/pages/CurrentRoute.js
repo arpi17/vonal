@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
-// import { mapboxToken } from '../accessToken';
 import isEqual from 'lodash.isequal';
 import isEmpty from 'lodash.isempty';
 
@@ -26,10 +25,7 @@ import Button from '../components/buttons/Button';
 import sizes from '../styles/sizes';
 
 // Set Mapbox Access Token
-const mapboxToken =
-  process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_MAPBOX_TOKEN
-    : require('../config/accessToken').mapboxToken;
+const mapboxToken = require('../config/accessToken').mapboxToken;
 mapboxgl.accessToken = mapboxToken;
 
 export class CurrentRoute extends Component {

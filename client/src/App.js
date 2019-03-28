@@ -37,12 +37,6 @@ import setAuthToken from './utils/setAuthToken';
 // Styles
 import './App.css';
 
-// TODO: REMOVE THIS
-console.log(process.env);
-console.log('mapbox token: ' + process.env.REACT_APP_MAPBOX_TOKEN);
-console.log('mongo: ' + process.env.MONGO_URI);
-console.log('secret: ' + process.env.SECRET_OR_KEY);
-
 const token = localStorage['authToken'];
 if (token) {
   setAuthToken(token);

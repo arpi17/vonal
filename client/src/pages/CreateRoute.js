@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
-// import { mapboxToken } from '../accessToken';
 import isEqual from 'lodash.isequal';
 
 // Components
@@ -27,10 +26,7 @@ import setOverlay from '../utils/setOverlay';
 import getBoundingCoords from '../utils/getBoundingCoords';
 
 // Set Mapbox Access Token
-const mapboxToken =
-  process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_MAPBOX_TOKEN
-    : require('../config/accessToken').mapboxToken;
+const mapboxToken = require('../config/accessToken').mapboxToken;
 mapboxgl.accessToken = mapboxToken;
 
 class CreateRoute extends Component {
