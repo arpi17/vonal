@@ -28,7 +28,7 @@ import sizes from '../styles/sizes';
 // Set Mapbox Access Token
 const mapboxToken =
   process.env.NODE_ENV === 'production'
-    ? process.env.MAPBOX_TOKEN
+    ? process.env.REACT_APP_MAPBOX_TOKEN
     : require('../config/accessToken').mapboxToken;
 mapboxgl.accessToken = mapboxToken;
 
