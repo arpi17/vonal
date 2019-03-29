@@ -69,6 +69,9 @@ class Discover extends Component {
   handleClick() {
     const { filter } = this.props.routes;
     this.props.getRoutes(filter);
+    this.setState({
+      isInitialised: true
+    });
   }
 
   render() {
@@ -80,12 +83,14 @@ class Discover extends Component {
     ) : routes.length > 0 ? (
       routes.map(route => <DiscoverCardWrap key={route._id} route={route} />)
     ) : isInitialised ? (
-      <h3>No routes found</h3>
+      <h3 style={{ marginLeft: '2rem' }}>No routes found</h3>
     ) : (
-      <h3>
-        Discover routes by adjusting the filter and clicking the button on the
-        left
-      </h3>
+      <div style={{ marginLeft: '2rem' }}>
+        <h3>Discover routes by adjusting the filter on the left.</h3>
+        <h3>
+          If you would like to see all the routes simply click the button.
+        </h3>
+      </div>
     );
 
     return (

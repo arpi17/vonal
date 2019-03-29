@@ -29,7 +29,7 @@ function Contact() {
           <ContactContainer>
             <ContactItem>
               <a
-                href="https://www.linkedin.com/in/%C3%A1rp%C3%A1d-illy%C3%A9s-1a7b84149/"
+                href="https://www.linkedin.com/in/arpadillyes/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
