@@ -10,6 +10,10 @@ const FlexContainer = styled.div`
   flex-wrap: ${props => (props.wrap ? 'wrap' : 'nowrap')};
   justify-content: ${props => props.centered && 'center'};
   align-items: ${props => props.centered && 'center'};
+
+  @media (max-width: ${props => props.breakpoint}) {
+    flex-direction: column;
+  }
 `;
 
 export default FlexContainer;

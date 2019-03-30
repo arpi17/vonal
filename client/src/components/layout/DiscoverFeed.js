@@ -17,6 +17,10 @@ const DiscoverFeed = styled.div`
   @media (max-width: 1266px) {
     justify-content: space-evenly;
   }
+
+  @media (max-width: 660px) {
+    padding-top: 20px;
+  }
 `;
 
 export default DiscoverFeed;

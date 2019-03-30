@@ -96,7 +96,7 @@ class Discover extends Component {
     return (
       <RoutesMain>
         <SectionTitle>Discover Routes</SectionTitle>
-        <FlexContainer>
+        <FlexContainer breakpoint="660px">
           <FilterArea>
             <Filter
               country={country}
