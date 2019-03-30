@@ -10,9 +10,9 @@ import Para from '../components/text/Para';
 function About() {
   return (
     <React.Fragment>
-      <RoutesMain>
+      <RoutesMain minHeight="80vh">
         <SectionTitle>About</SectionTitle>
-        <div style={{ maxWidth: '80%', margin: '0 auto' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           <Para>
             Vonal is a map sharing app aimed at travellers who wish to explore
             destinations as they couldn't before. By browsing through routes

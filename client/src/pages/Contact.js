@@ -11,9 +11,9 @@ import ContactItem from '../components/layout/ContactItem';
 function Contact() {
   return (
     <React.Fragment>
-      <RoutesMain>
+      <RoutesMain minHeight="80vh">
         <SectionTitle>Contact</SectionTitle>
-        <div style={{ maxWidth: '80%', margin: '0 auto' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           <Para>
             Should you have any questions, feedback or if you would like to
             report a bug you can visit the{' '}
@@ -34,7 +34,7 @@ function Contact() {
                 rel="noopener noreferrer"
               >
                 <LinkText>
-                  <i class="fab fa-linkedin fa-3x" />
+                  <i className="fab fa-linkedin fa-3x" />
                 </LinkText>
               </a>
             </ContactItem>
@@ -45,7 +45,7 @@ function Contact() {
                 rel="noopener noreferrer"
               >
                 <LinkText>
-                  <i class="fab fa-github fa-3x" />
+                  <i className="fab fa-github fa-3x" />
                 </LinkText>
               </a>
             </ContactItem>
@@ -56,7 +56,7 @@ function Contact() {
                 rel="noopener noreferrer"
               >
                 <LinkText>
-                  <i class="fab fa-twitter fa-3x" />
+                  <i className="fab fa-twitter fa-3x" />
                 </LinkText>
               </a>
             </ContactItem>
@@ -68,7 +68,7 @@ function Contact() {
                   rel="noopener noreferrer"
                 >
                   <LinkText>
-                    <i class="far fa-envelope fa-3x" />
+                    <i className="far fa-envelope fa-3x" />
                   </LinkText>
                 </a>
               </address>
