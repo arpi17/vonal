@@ -7,7 +7,9 @@ import InputField from '../components/user-input/InputField';
 import { registerUser } from '../actions/authActions';
 
 // Styled-components
-import { Grid, GridContent, GridImage } from '../components/layout/Grid';
+import SplitMain from '../components/main/SplitMain';
+import SplitImage from '../components/layout/SplitImage';
+import SplitContent from '../components/layout/SplitContent';
 import {
   Card,
   CardContent,
@@ -60,10 +62,13 @@ class Register extends Component {
   render() {
     const { name, email, password, password2, errors } = this.state;
     return (
-      <Grid areas={'"image content content"'}>
-        <GridImage img={process.env.PUBLIC_URL + '/roadsign.jpg'} />
-        <GridContent>
-          <Card top="40px">
+      <SplitMain>
+        <SplitImage
+          img={process.env.PUBLIC_URL + '/roadsign.jpg'}
+          flex="0 1 40%"
+        />
+        <SplitContent flex="1 0 auto">
+          <Card>
             <CardContent>
               <CardTitle>Sign Up</CardTitle>
               <form onSubmit={this.handleSubmit}>
@@ -111,8 +116,8 @@ class Register extends Component {
               </form>
             </CardContent>
           </Card>
-        </GridContent>
-      </Grid>
+        </SplitContent>
+      </SplitMain>
     );
   }
 }

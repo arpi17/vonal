@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Grid, GridImage, GridContent } from '../components/layout/Grid';
+// import { Grid, GridImage, GridContent } from '../components/layout/Grid';
+import SplitMain from '../components/main/SplitMain';
+import SplitImage from '../components/layout/SplitImage';
+import SplitContent from '../components/layout/SplitContent';
 import {
   Card,
   CardContent,
@@ -12,9 +15,9 @@ import LinkText from '../components/text/LinkText';
 
 function NotFound() {
   return (
-    <Grid areas='"content image image"'>
-      <GridContent>
-        <Card top="180px">
+    <SplitMain>
+      <SplitContent flex="1 0 50%">
+        <Card>
           <CardContent>
             <CardTitle>404 Not Found</CardTitle>
             <CardText>
@@ -26,9 +29,12 @@ function NotFound() {
             </CardText>
           </CardContent>
         </Card>
-      </GridContent>
-      <GridImage img={process.env.PUBLIC_URL + '/notfound.jpg'} />
-    </Grid>
+      </SplitContent>
+      <SplitImage
+        img={process.env.PUBLIC_URL + '/notfound.jpg'}
+        flex="1 0 50%"
+      />
+    </SplitMain>
   );
 }
 

@@ -6,16 +6,10 @@ export const Card = styled.div`
   width: ${props => (props.width ? props.width : '300px')};
   padding: 20px;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: ${props => (props.top ? props.top : '70px')};
-
   display: flex;
   justify-content: center;
   align-items: center;
 
-  margin: auto;
   border-radius: 20px;
   background-color: ${colors.bgColorDark};
   color: #efefef;

@@ -2,20 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Styled-components
+import SplitMain from '../components/main/SplitMain';
+import SplitImage from '../components/layout/SplitImage';
 import { MainTagline, SubTagline } from '../components/text/Title';
-import { Grid, GridContent, GridImage } from '../components/layout/Grid';
-import { Card } from '../components/cards/Card';
+import LandingCard from '../components/cards/LandingCard';
 import { NavList, NavItem } from '../components/navigation/Nav';
 
 function Landing() {
   return (
-    <Grid areas={'"image image content"'}>
-      <GridImage img={process.env.PUBLIC_URL + '/landing.jpg'} overlay>
+    <SplitMain>
+      <SplitImage img={process.env.PUBLIC_URL + '/landing.jpg'} overlay>
         <MainTagline>Vonal</MainTagline>
         <SubTagline>Create and discover your own routes</SubTagline>
-      </GridImage>
-      <GridContent>
-        <Card width="200px" top="120px">
+        <LandingCard>
           <NavList>
             <NavItem as={Link} to="/register">
               Sign Up
@@ -33,9 +32,9 @@ function Landing() {
               Contact
             </NavItem>
           </NavList>
-        </Card>
-      </GridContent>
-    </Grid>
+        </LandingCard>
+      </SplitImage>
+    </SplitMain>
   );
 }
 

@@ -7,7 +7,8 @@ import InputField from '../components/user-input/InputField';
 import { loginUser } from '../actions/authActions';
 
 // Styled-components
-import { Grid, GridImage } from '../components/layout/Grid';
+import SplitMain from '../components/main/SplitMain';
+import SplitImage from '../components/layout/SplitImage';
 import {
   Card,
   CardContent,
@@ -65,9 +66,9 @@ class Login extends Component {
   render() {
     const { email, password, errors } = this.state;
     return (
-      <Grid areas={'"image image image"'}>
-        <GridImage img={process.env.PUBLIC_URL + '/login.jpg'}>
-          <Card top="200px">
+      <SplitMain>
+        <SplitImage img={process.env.PUBLIC_URL + '/login.jpg'} flex>
+          <Card>
             <CardContent>
               <CardTitle>Login</CardTitle>
 
@@ -100,8 +101,8 @@ class Login extends Component {
               </CardText>
             </CardContent>
           </Card>
-        </GridImage>
-      </Grid>
+        </SplitImage>
+      </SplitMain>
     );
   }
 }
