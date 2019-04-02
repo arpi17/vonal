@@ -63,7 +63,7 @@ export class CurrentRoute extends Component {
       };
 
       map.on('load', loadListener);
-      map.addControl(new mapboxgl.NavigationControl());
+      map.addControl(new mapboxgl.NavigationControl(), 'top-left');
     }
   }
 

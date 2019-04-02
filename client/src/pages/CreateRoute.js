@@ -97,6 +97,8 @@ class CreateRoute extends Component {
       }
     });
 
+    const nav = new mapboxgl.NavigationControl();
+
     const geolocator = new mapboxgl.GeolocateControl({
       fitBoundsOptions: {
         maxZoom: 14
@@ -104,6 +106,7 @@ class CreateRoute extends Component {
       showUserLocation: false
     });
 
+    map.addControl(nav, 'top-left');
     map.addControl(geolocator);
 
     const zoomListener = () => {

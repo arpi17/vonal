@@ -17,7 +17,7 @@ function About() {
             Vonal is a map sharing app aimed at travellers who wish to explore
             destinations as they couldn't before. By browsing through routes
             created by others the users can select what kind of journey they
-            would like to experience upon visitng another place.
+            would like to experience upon visiting another place.
           </Para>
           <Para>
             Every visitor is able to view all the routes, but if you would like
