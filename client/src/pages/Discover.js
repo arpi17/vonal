@@ -9,9 +9,13 @@ import SectionTitle from '../components/text/SectionTitle';
 import FlexContainer from '../components/layout/FlexContainer';
 import FilterArea from '../components/layout/FilterArea';
 import Filter from '../components/user-input/Filter';
-import DiscoverFeed from '../components/layout/DiscoverFeed';
-import DiscoverCardWrap from '../components/wraps/DiscoverCardWrap';
-import Loader from '../components/loaders/Loader';
+import FeedContainer from '../components/layout/FeedContainer';
+
+import DiscoverFeed from '../components/feeds/DiscoverFeed';
+import withLoading from '../components/HOC/withLoading';
+
+// Declare Feed with Loading HOC
+const FeedWithLoading = withLoading(DiscoverFeed);
 
 class Discover extends Component {
   static propTypes = {
@@ -78,21 +82,6 @@ class Discover extends Component {
     const { country, city, type, isInitialised } = this.state;
     const { routes, loading } = this.props.routes;
 
-    const routesFeed = loading ? (
-      <Loader />
-    ) : routes.length > 0 ? (
-      routes.map(route => <DiscoverCardWrap key={route._id} route={route} />)
-    ) : isInitialised ? (
-      <h3 style={{ marginLeft: '2rem' }}>No routes found</h3>
-    ) : (
-      <div style={{ marginLeft: '2rem' }}>
-        <h3>Discover routes by adjusting the filter on the left.</h3>
-        <h3>
-          If you would like to see all the routes simply click the button.
-        </h3>
-      </div>
-    );
-
     return (
       <RoutesMain>
         <SectionTitle>Discover Routes</SectionTitle>
@@ -107,7 +96,13 @@ class Discover extends Component {
               onClick={this.handleClick}
             />
           </FilterArea>
-          <DiscoverFeed>{routesFeed}</DiscoverFeed>
+          <FeedContainer>
+            <FeedWithLoading
+              isLoading={loading}
+              routes={routes}
+              isInitialised={isInitialised}
+            />
+          </FeedContainer>
         </FlexContainer>
       </RoutesMain>
     );

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const DiscoverFeed = styled.div`
+const FeedContainer = styled.div`
   height: 70vh;
   width: 100%;
   display: flex;
@@ -23,4 +23,4 @@ const DiscoverFeed = styled.div`
   }
 `;
 
-export default DiscoverFeed;
+export default FeedContainer;
