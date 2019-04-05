@@ -14,6 +14,9 @@ import CreateRouteMain from '../components/main/CreateRouteMain';
 import MapContainer from '../components/layout/MapContainer';
 import DescContainer from '../components/layout/DescContainer';
 import Map from '../components/map/Map';
+import InfoText from '../components/text/InfoText';
+import CreateInfoModal from '../components/modals/CreateInfoModal';
+import FlexRow from '../components/layout/FlexRow';
 
 // Actions
 import { createRoute, updateRoute } from '../actions/routeActions';
@@ -33,6 +36,7 @@ class CreateRoute extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isModalOpen: false,
       map: {},
       isLoading: true,
       _id: '',
@@ -60,6 +64,7 @@ class CreateRoute extends Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.setLocationName = this.setLocationName.bind(this);
     this.setRoute = this.setRoute.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentDidMount() {
@@ -324,8 +329,17 @@ class CreateRoute extends Component {
       });
   }
 
+  toggleModal(e) {
+    if (e.target === e.currentTarget) {
+      this.setState({
+        isModalOpen: !this.state.isModalOpen
+      });
+    }
+  }
+
   render() {
     const {
+      isModalOpen,
       map,
       isLoading,
       _id,
@@ -337,11 +351,17 @@ class CreateRoute extends Component {
     return (
       <CreateRouteMain>
         <MapContainer>
-          <SearchBar
-            map={map}
-            isLoading={isLoading}
-            accessToken={mapboxToken}
-          />
+          <FlexRow margin="10px auto 20px auto">
+            <SearchBar
+              map={map}
+              isLoading={isLoading}
+              accessToken={mapboxToken}
+            />
+            <InfoText onClick={e => this.toggleModal(e)}>
+              How it works?
+            </InfoText>
+          </FlexRow>
+          <CreateInfoModal isOpen={isModalOpen} onClose={this.toggleModal} />
           <Map ref={el => (this.mapContainer = el)} />
         </MapContainer>
         <DescContainer>
