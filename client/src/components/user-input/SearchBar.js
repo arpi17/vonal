@@ -23,7 +23,13 @@ class SearchBar extends Component {
   }
 
   render() {
-    return <div className="search-bar" ref={this.geocoderRef} />;
+    return (
+      <div
+        className="search-bar"
+        style={{ zIndex: '10' }}
+        ref={this.geocoderRef}
+      />
+    );
   }
 }
 
